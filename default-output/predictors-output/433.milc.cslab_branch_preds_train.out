@@ -1,0 +1,14 @@
+Total Instructions: 38323372920
+
+RAS: (Correct - Incorrect)
+RAS (1 entries): 217416081 549651
+RAS (2 entries): 217878311 87421
+RAS (4 entries): 217964833 899
+
+Branch Predictors: (Name - Correct - Incorrect)
+  Nbit-16K-1: 789062367 994127127
+  Nbit-16K-2: 1285315965 497873529
+  Nbit-32K-1: 789062395 994127099
+  Pentium-M: 1734021278 49168216
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
