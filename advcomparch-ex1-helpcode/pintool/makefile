@@ -1,4 +1,4 @@
-PIN_ROOT ?= /home/panos/pin
+PIN_ROOT ?= /home/panos/tools/pin
 
 CONFIG_ROOT := $(PIN_ROOT)/source/tools/Config
 include $(CONFIG_ROOT)/makefile.config

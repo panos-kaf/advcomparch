@@ -7,7 +7,7 @@
 ADVCOMPARCH="/home/panos/dev/advcomparch"
 HELPCODE="$ADVCOMPARCH/advcomparch-ex1-helpcode"
 
-PIN_EXE="/home/panos/pin/pin"
+PIN_EXE="/home/panos/tools/pin/pin"
 PIN_TOOL="$HELPCODE/pintool/obj-intel64/cslab_branch.so"
 
 # Output directory for PIN's output -- BE CAREFUL! THE PATH NEEDS TO EXIST!!!

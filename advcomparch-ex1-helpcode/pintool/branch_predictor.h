@@ -58,61 +58,76 @@ public:
         return (prediction != 0);
     };
 
-    virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target, int fsm) {
+    virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target, int fsm = 1) {
         unsigned int ip_table_index = ip % table_entries;
-        switch fsm:
-	case 1:
-		if (actual) {
-		    if (TABLE[ip_table_index] < COUNTER_MAX)
-			TABLE[ip_table_index]++;
-		} else {
-		    if (TABLE[ip_table_index] > 0)
-			TABLE[ip_table_index]--;
-		}
-		break;
+        switch (fsm){
+			case 1:		// saturated counter (default)
+				if (actual) {
+					if (TABLE[ip_table_index] < COUNTER_MAX)
+					TABLE[ip_table_index]++;
+				} else {
+					if (TABLE[ip_table_index] > 0)
+					TABLE[ip_table_index]--;
+				}
+				break;
 
-	case 2:
-		if (actual) {
-			if (TABLE[ip_table_index] < COUNTER_MAX)
-				TABLE[ip_table_index]++;
-		}
-		else {
-			if (TABLE[ip_table_index] == COUNTER_MAX)
-				TABLE[ip_table_index]--;
-			else{
-				TABLE[ip_table_index] = 0;
-			}
-		}
-		break;
+			case 2:
+				if (actual) {
+					if (TABLE[ip_table_index] < COUNTER_MAX)
+						TABLE[ip_table_index]++;
+				}
+				else {
+					if (TABLE[ip_table_index] == COUNTER_MAX)
+						TABLE[ip_table_index]--;
+					else{
+						TABLE[ip_table_index] = 0;
+					}
+				}
+				break;
 
-	case 3:
-		if (actual){
-			if (TABLE[ip_table_index] == 0)
-				TABLE[ip_table_index]++;
-			else if( TABLE[ip_table_index < COUNTER_MAX)
-				TABLE[ip_table_index] = COUNTER_MAX;
-		}
-		else {
-			if (TABLE[ip_table_index] > 0)
-				TABLE[ip_table_index]--;
-		}
-		break;
+			case 3:
+				if (actual){
+					if (TABLE[ip_table_index] == 0)
+						TABLE[ip_table_index]++;
+					else if( TABLE[ip_table_index] < COUNTER_MAX)
+						TABLE[ip_table_index] = COUNTER_MAX;
+				}
+				else {
+					if (TABLE[ip_table_index] > 0)
+						TABLE[ip_table_index]--;
+				}
+				break;
 
-	case 4:
-		if (actual){
-		}
-		else {
-		
-		}
-		break;
+			case 4:
+				if (actual){
+					if (TABLE[ip_table_index] == 0)
+						TABLE[ip_table_index]++;
+				else TABLE[ip_table_index] = COUNTER_MAX;
+				}
+				else {
+					if (TABLE[ip_table_index] == COUNTER_MAX)
+						TABLE[ip_table_index]--;
+					else TABLE[ip_table_index] = 0;
+				}
+				break;
 
-	case 5:
-		if (actual){
-		}
-		else {
-		}
-		break;
-	
+			case 5:
+				if (actual){
+					if (TABLE[ip_table_index] == 0)
+						TABLE[ip_table_index]++;
+					else if (TABLE[ip_table_index] == COUNTER_MAX)
+						TABLE[ip_table_index]--;
+					else 
+						TABLE[ip_table_index] = COUNTER_MAX;
+				}
+				else {
+					if (TABLE[ip_table_index] != 0)
+						TABLE[ip_table_index]--; 
+				}
+				break;
+			default:
+				std::cout<<"Invalid FSM!\n";
+	}
         updateCounters(predicted, actual);
     };
 
