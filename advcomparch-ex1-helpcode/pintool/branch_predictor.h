@@ -162,19 +162,73 @@ public:
 	     : table_lines(btb_lines), table_assoc(btb_assoc)
 	{
 		/* ... fill me ... */
+		sets = btb_lines / btb_assoc;
+
+		BTB = new BTB_entry*[sets];
+		for (int i = 0; i < sets; i++){			// init BTB
+			BTB[i] = new BTB_entry[table_assoc];
+			memset(BTB[i], 0, table_assoc * sizeof(BTB_entry));		
+		}
 	}
 
 	~BTBPredictor() {
-		/* ... fill me ... */
+		for (int i = 0; i < sets; i++)
+			delete BTB[i];
+		delete[] BTB;
 	}
 
     virtual bool predict(ADDRINT ip, ADDRINT target) {
-		/* ... fill me ... */
+		int set_index = ip % sets;
+		
+		for (int i = 0; i < table_assoc; i++){
+			BTB_entry* entry = &BTB[set_index][i];
+			if (entry->lookup_addr == ip)
+				return entry->prediction;
+		}
 		return false;
 	}
 
     virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target) {
-		/* ... fill me ... */
+		int set_index = ip % sets;
+		int i = 0;
+		int empty_entry = 0;
+		bool found = false;
+		bool found_empty_entry = false;
+
+		for (i = 0; i < table_assoc; i++){
+			BTB_entry* entry = &BTB[set_index][i];
+			if (entry->lookup_addr == ip){
+				found = true;
+				break;
+			}
+			else if (entry->lookup_addr == 0 && !found_empty_entry){
+				found_empty_entry = true;
+				empty_entry = i;
+			}
+		}
+		if (found){
+			if (!actual) {
+				memset(&BTB[set_index][i], 0, sizeof(BTB_entry));
+			}
+			updateCounters(predicted, actual);	// check for target misprediction
+		}
+		else{
+			updateCounterS(0, 1)				// direction miss if not in BTB 
+			if (actual){
+				BTB_entry new_entry;
+				new_entry.lookup_addr = ip;
+				new_entry.prediction = target;
+				new_entry.taken = true;
+				if (found_empty_entry)
+					BTB[set_index][empty_entry] = new_entry;
+				else{
+					//fifo replacement strategy
+					static int replacement_index = 0;
+					BTB[set_index][replacement_index] = new_entry;
+					replacement_index = (replacement_index + 1) % table_assoc;
+				}
+			}
+		}
 	}
 
     virtual string getName() { 
@@ -189,7 +243,14 @@ public:
 	}
 
 private:
-	int table_lines, table_assoc;
+	int table_lines, table_assoc, sets;
+	typedef struct {
+		unsigned long long lookup_addr, prediction;
+		bool taken;
+	} BTB_entry;
+
+	BTB_entry** BTB;
+
 };
 
 
