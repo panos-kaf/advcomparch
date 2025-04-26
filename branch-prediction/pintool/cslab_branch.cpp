@@ -164,7 +164,7 @@ VOID Fini(int code, VOID * v)
 VOID InitPredictors()
 {
     // N-bit predictors
-    for (int i=1; i <= 4; i++) {
+    for (int i=1; i <= 2; i++) {
         NbitPredictor *nbitPred = new NbitPredictor(14, i);
         branch_predictors.push_back(nbitPred);
     }
@@ -186,34 +186,28 @@ VOID InitPredictors_5_3i()
 VOID InitPredictors_FSM()
 {
     for (int i=1; i <= 5; i++) {
-        NbitPredictor *nbitPred = new NbitPredictor(14, i);
+        NbitPredictor *nbitPred = new NbitPredictor(14, 2, i);
         branch_predictors.push_back(nbitPred);
     }
 }
 VOID InitPredictors_BTB()
 {
-    BTBPredictor *BTBpred1 = new BTBPredictor(512, 1);
-    BTBPredictor *BTBpred2 = new BTBPredictor(512, 2);
-    BTBPredictor *BTBpred3 = new BTBPredictor(256, 2);
-    BTBPredictor *BTBpred4 = new BTBPredictor(256, 4);
-    BTBPredictor *BTBpred5 = new BTBPredictor(128, 2);
-    BTBPredictor *BTBpred6 = new BTBPredictor(128, 4);
-    BTBPredictor *BTBpred7 = new BTBPredictor(64, 4);
-    BTBPredictor *BTBpred8 = new BTBPredictor(64, 8);
-    btb_predictors.push_back(BTBpred1);
-    btb_predictors.push_back(BTBpred2);
-    btb_predictors.push_back(BTBpred3);
-    btb_predictors.push_back(BTBpred4);
-    btb_predictors.push_back(BTBpred5);
-    btb_predictors.push_back(BTBpred6);
-    btb_predictors.push_back(BTBpred7);
-    btb_predictors.push_back(BTBpred8);
+    btb_predictors.push_back(new BTBPredictor(512, 1));
+    btb_predictors.push_back(new BTBPredictor(512, 2));
+    btb_predictors.push_back(new BTBPredictor(256, 2));
+    btb_predictors.push_back(new BTBPredictor(256, 4));
+    btb_predictors.push_back(new BTBPredictor(128, 2));
+    btb_predictors.push_back(new BTBPredictor(128, 4));
+    btb_predictors.push_back(new BTBPredictor(64, 4));
+    btb_predictors.push_back(new BTBPredictor(64, 8));
 }
 
 VOID InitRas()
 {
-    for (UINT32 i = 1; i <= 4; i*=2)
-        ras_vec.push_back(new RAS(i));
+    for (UINT32 i = 2; i <= 6; i++){
+        ras_vec.push_back(new RAS(1<<i));
+        if (i == 5) ras_vec.push_back(new RAS(3 * (1<<i) / 2));
+    }
 }
 
 int main(int argc, char *argv[])
@@ -227,7 +221,8 @@ int main(int argc, char *argv[])
     outFile.open(KnobOutputFile.Value().c_str());
 
     // Initialize predictors and RAS vector
-    InitPredictors_BTB();
+	//InitPredictors_FSM();
+    //InitPredictors_BTB();
     InitRas();
 
     // Instrument function calls in order to catch __parsec_roi_{begin,end}

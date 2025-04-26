@@ -127,13 +127,13 @@ public:
 				break;
 			default:
 				std::cout<<"Invalid FSM!\n";
-	}
+		}
         updateCounters(predicted, actual);
     };
 
     virtual string getName() {
         std::ostringstream stream;
-        stream << "Nbit-" << pow(2.0,double(index_bits)) / 1024.0 << "K-" << cntr_bits;
+        stream << "Nbit-" << pow(2.0,double(index_bits)) / 1024.0 << "K-" << cntr_bits << " (FSM-" << fsm << ")";
         return stream.str();
     }
 
@@ -216,7 +216,7 @@ public:
 				new_entry.lookup_addr = ip;
 				new_entry.prediction = target;
 				new_entry.taken = true;
-				updateCounters(0, 1);				// direction miss if not in BTB 
+				updateCounters(0, 1);		// miss if branch taken and not in BTB
 				if (found_empty_entry)
 					BTB[set_index][empty_entry] = new_entry;
 				else{
@@ -253,5 +253,20 @@ private:
 
 };
 
+class AlwaysTakenPredictor: public BranchPredictor
+{
+public:
+	AlwaysTakenPredictor() {};
+	~AlwaysTakenPredictor() {};
+
+	virtual bool predict(ADDRINT ip, ADDRINT target){ return true; }
+	
+	virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target){
+		updateCounters(predicted, actual);
+	}
+
+	virtual string getName() { return "Static AlwaysTaken"; }
+}
 
 #endif
+ 
