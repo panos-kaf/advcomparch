@@ -192,6 +192,11 @@ VOID InitPredictors_FSM()
     }
 }
 
+VOID InitPredictors_5_3iii()
+{
+    //...
+}
+
 VOID InitPredictors_BTB()
 {
     btb_predictors.push_back(new BTBPredictor(512, 1));
@@ -229,12 +234,10 @@ int main(int argc, char *argv[])
     outFile.open(KnobOutputFile.Value().c_str());
 
     // Initialize predictors and RAS vector
-	//InitPredictors_5_3i();					// 5.3 i)
-	//InitPredictors_FSM();						// 5.3 ii)
-	//InitPredictors_5_3iii();					// 5.3 iii)
-    //InitPredictors_BTB();						// 5.4
-    InitRas();									// 5.5
-	//InitStaticPredictors();					// 5.6
+	InitPredictors_FSM();
+    //InitPredictors_BTB();
+    //InitRas();
+	//InitStaticPredictors();
 
     // Instrument function calls in order to catch __parsec_roi_{begin,end}
     INS_AddInstrumentFunction(Instruction, 0);
