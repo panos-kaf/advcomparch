@@ -13,8 +13,8 @@ PIN_TOOL="$BASE_DIR/pintool/obj-intel64/cslab_branch.so"
 outDir="$BASE_DIR/output/"
 
 # Base directory that contains all benchmark folders (This is the directory where all the benchmark folders are)
-#inputBase="$BASE_DIR/spec_execs_train_inputs"
-inputBase="$BASE_DIR/spec_execs_ref_inputs"
+inputBase="$BASE_DIR/spec_execs_train_inputs"
+#inputBase="$BASE_DIR/spec_execs_ref_inputs"
 
 # Loop over every subfolder in the input base directory.
 # By uncommenting the respective lines below you can run either only one benchmark or all benchmarks inside a directory

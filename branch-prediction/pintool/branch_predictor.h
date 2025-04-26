@@ -152,7 +152,7 @@ class BTBPredictor : public BranchPredictor
 {
 public:
 	BTBPredictor(int btb_lines, int btb_assoc)
-	     : table_lines(btb_lines), table_assoc(btb_assoc)
+	     : table_lines(btb_lines), table_assoc(btb_assoc), correct_target_predictions(0)
 	{
 		sets = btb_lines / btb_assoc;
 		replacement_index = new int[sets]();
@@ -208,12 +208,12 @@ public:
 			updateCounters(predicted, actual);	// check for target misprediction
 		}
 		else{
-			//updateCounters(0, 1);				// direction miss if not in BTB 
 			if (actual){
 				BTB_entry new_entry;
 				new_entry.lookup_addr = ip;
 				new_entry.prediction = target;
 				new_entry.taken = true;
+				updateCounters(0, 1);				// direction miss if not in BTB 
 				if (found_empty_entry)
 					BTB[set_index][empty_entry] = new_entry;
 				else{
@@ -222,6 +222,7 @@ public:
 					replacement_index[set_index] = (repl_index + 1) % table_assoc;
 				}
 			}
+			else updateCounters(0,0);		// if not taken and not in btb, hit
 		}
 	}
 
@@ -245,6 +246,8 @@ private:
 
 	BTB_entry** BTB;
 	int *replacement_index;
+
+	UINT64 correct_target_predictions;
 
 };
 

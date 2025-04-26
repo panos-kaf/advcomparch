@@ -192,10 +192,22 @@ VOID InitPredictors_FSM()
 }
 VOID InitPredictors_BTB()
 {
-    for (int i=1; i <= 2; i++) {
-        BTBPredictor *BTBpred = new BTBPredictor(512, i);
-        branch_predictors.push_back(BTBpred);
-    }
+    BTBPredictor *BTBpred1 = new BTBPredictor(512, 1);
+    BTBPredictor *BTBpred2 = new BTBPredictor(512, 2);
+    BTBPredictor *BTBpred3 = new BTBPredictor(256, 2);
+    BTBPredictor *BTBpred4 = new BTBPredictor(256, 4);
+    BTBPredictor *BTBpred5 = new BTBPredictor(128, 2);
+    BTBPredictor *BTBpred6 = new BTBPredictor(128, 4);
+    BTBPredictor *BTBpred7 = new BTBPredictor(64, 4);
+    BTBPredictor *BTBpred8 = new BTBPredictor(64, 8);
+    branch_predictors.push_back(BTBpred1);
+    branch_predictors.push_back(BTBpred2);
+    branch_predictors.push_back(BTBpred3);
+    branch_predictors.push_back(BTBpred4);
+    branch_predictors.push_back(BTBpred5);
+    branch_predictors.push_back(BTBpred6);
+    branch_predictors.push_back(BTBpred7);
+    branch_predictors.push_back(BTBpred8);
 }
 
 VOID InitRas()
