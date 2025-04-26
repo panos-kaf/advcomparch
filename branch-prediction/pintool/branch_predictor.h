@@ -205,6 +205,9 @@ public:
 			if (!actual) {
 				memset(&BTB[set_index][i], 0, sizeof(BTB_entry));
 			}
+			else {
+				if (BTB[set_index][i].prediction == target) correct_target_predictions++;
+			}
 			updateCounters(predicted, actual);	// check for target misprediction
 		}
 		else{
@@ -233,8 +236,7 @@ public:
 	}
 
     UINT64 getNumCorrectTargetPredictions() { 
-		/* ... fill me ... */
-		return 0;
+		return correct_target_predictions;
 	}
 
 private:
