@@ -1,0 +1,13 @@
+Total Instructions: 142163203245
+
+RAS: (Correct - Incorrect)
+RAS (4 entries): 2325295393 95447257
+RAS (8 entries): 2414322620 6420030
+RAS (16 entries): 2420036734 705916
+RAS (32 entries): 2420395004 347646
+RAS (48 entries): 2420485857 256793
+RAS (64 entries): 2420532614 210036
+
+Branch Predictors: (Name - Correct - Incorrect)
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)

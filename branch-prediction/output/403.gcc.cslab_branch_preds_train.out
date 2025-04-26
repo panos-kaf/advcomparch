@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Total Instructions: 3184189672
 
 RAS: (Correct - Incorrect)
@@ -7,6 +8,17 @@ RAS (16 entries): 56586417 9729
 RAS (32 entries): 56594565 1581
 RAS (48 entries): 56595473 673
 RAS (64 entries): 56595850 296
+=======
+Total Instructions: 3184113868
+
+RAS: (Correct - Incorrect)
+RAS (4 entries): 54258399 2337468
+RAS (8 entries): 56426467 169400
+RAS (16 entries): 56586137 9730
+RAS (32 entries): 56594286 1581
+RAS (48 entries): 56595194 673
+RAS (64 entries): 56595571 296
+>>>>>>> cae93eff11ef9469a87ff00b381932d1e1680094
 
 Branch Predictors: (Name - Correct - Incorrect)
   Nbit-16K-2 (FSM-1): 520155946 54315152
@@ -18,6 +30,7 @@ Branch Predictors: (Name - Correct - Incorrect)
   Static-BT-FNT: 173607015 400864083
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
+<<<<<<< HEAD
   BTB-512-1: 552823381 88256518 272723672
   BTB-512-2: 559308898 81771001 279850031
   BTB-256-2: 549811267 91268632 269173069
@@ -26,3 +39,5 @@ BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
   BTB-128-4: 540344352 100735547 258871297
   BTB-64-4: 525843351 115236548 242537865
   BTB-64-8: 528410734 112669165 245411299
+=======
+>>>>>>> cae93eff11ef9469a87ff00b381932d1e1680094
