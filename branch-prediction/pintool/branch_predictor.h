@@ -265,7 +265,22 @@ public:
 		updateCounters(predicted, actual);
 	}
 
-	virtual string getName() { return "Static AlwaysTaken"; }
+	virtual string getName() { return "Static: AlwaysTaken"; }
+}
+
+class BTFNTPredictor: public BranchPredictor
+{
+public:
+	BTFNTPredictor() {};
+	~BTFNTPredictor() {};
+
+	virtual bool predict(ADDRINT ip, ADDRINT target){ return ip < target; }
+	
+	virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target){
+		updateCounters(predicted, actual);
+	}
+
+	virtual string getName() { return "Static: BackwardTaken-ForwardNotTaken"; }
 }
 
 #endif
