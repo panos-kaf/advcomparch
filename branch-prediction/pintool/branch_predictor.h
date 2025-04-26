@@ -133,7 +133,10 @@ public:
 
     virtual string getName() {
         std::ostringstream stream;
-        stream << "Nbit-" << pow(2.0,double(index_bits)) / 1024.0 << "K-" << cntr_bits << " (FSM-" << fsm << ")";
+		if (fsm == 1)
+			stream << "Nbit-" << pow(2.0,double(index_bits)) / 1024.0 << "K-" << cntr_bits << " (Saturated Counter)";
+        else
+			stream << "Nbit-" << pow(2.0,double(index_bits)) / 1024.0 << "K-" << cntr_bits << " (FSM-" << fsm << ")";
         return stream.str();
     }
 

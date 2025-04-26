@@ -194,7 +194,12 @@ VOID InitPredictors_FSM()
 
 VOID InitPredictors_5_3iii()
 {
-    //...
+    branch_predictors.push_back(new NbitPredictor(15, 1, 1));       // 32K x 1-bit
+
+    for (int i = 1; i <= 5; i++) 
+        branch_predictors.push_back(new NbitPredictor(14, 2, i));   // 16K x 2-bit   
+
+    branch_predictors.push_back(new NbitPredictor(13, 4, 1));       // 8K x 4-bit
 }
 
 VOID InitPredictors_BTB()
