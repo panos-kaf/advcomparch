@@ -183,6 +183,7 @@ VOID InitPredictors_5_3i()
         branch_predictors.push_back(nbitPred);
     }
 }
+
 VOID InitPredictors_FSM()
 {
     for (int i=1; i <= 5; i++) {
@@ -190,6 +191,7 @@ VOID InitPredictors_FSM()
         branch_predictors.push_back(nbitPred);
     }
 }
+
 VOID InitPredictors_BTB()
 {
     btb_predictors.push_back(new BTBPredictor(512, 1));
@@ -200,6 +202,12 @@ VOID InitPredictors_BTB()
     btb_predictors.push_back(new BTBPredictor(128, 4));
     btb_predictors.push_back(new BTBPredictor(64, 4));
     btb_predictors.push_back(new BTBPredictor(64, 8));
+}
+
+VOID InitStaticPredictors()
+{
+	branch_predictors.push_back(new AlwaysTakenPredictor());
+	branch_predictors.push_back(new BTFNTPredictor());
 }
 
 VOID InitRas()
@@ -221,9 +229,10 @@ int main(int argc, char *argv[])
     outFile.open(KnobOutputFile.Value().c_str());
 
     // Initialize predictors and RAS vector
-	//InitPredictors_FSM();
+	InitPredictors_FSM();
     //InitPredictors_BTB();
-    InitRas();
+    //InitRas();
+	//InitStaticPredictors();
 
     // Instrument function calls in order to catch __parsec_roi_{begin,end}
     INS_AddInstrumentFunction(Instruction, 0);

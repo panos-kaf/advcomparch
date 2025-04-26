@@ -265,8 +265,8 @@ public:
 		updateCounters(predicted, actual);
 	}
 
-	virtual string getName() { return "Static: AlwaysTaken"; }
-}
+	virtual string getName() { return "Static-AlwaysTaken"; }
+};
 
 class BTFNTPredictor: public BranchPredictor
 {
@@ -280,8 +280,8 @@ public:
 		updateCounters(predicted, actual);
 	}
 
-	virtual string getName() { return "Static: BackwardTaken-ForwardNotTaken"; }
-}
+	virtual string getName() { return "Static-BT-FNT"; };
+};
 
 #endif
  
