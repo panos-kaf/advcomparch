@@ -239,7 +239,9 @@ int main(int argc, char *argv[])
     outFile.open(KnobOutputFile.Value().c_str());
 
     // Initialize predictors and RAS vector
-	InitPredictors_FSM();
+	//InitPredictors_5_3i();
+	//InitPredictors_FSM();
+	InitPredictors_5_3iii();
     //InitPredictors_BTB();
     //InitRas();
 	//InitStaticPredictors();
