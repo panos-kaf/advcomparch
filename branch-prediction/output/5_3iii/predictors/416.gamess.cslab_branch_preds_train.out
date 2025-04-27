@@ -1,0 +1,14 @@
+Total Instructions: 1042736497446
+
+RAS: (Correct - Incorrect)
+
+Branch Predictors: (Name - Correct - Incorrect)
+  Nbit-32K-1 (Saturated Counter): 53710190177 13179294929
+  Nbit-16K-2 (Saturated Counter): 57914854690 8974630416
+  Nbit-16K-2 (FSM-2): 56562531486 10326953620
+  Nbit-16K-2 (FSM-3): 58390500902 8498984204
+  Nbit-16K-2 (FSM-4): 57846165113 9043319993
+  Nbit-16K-2 (FSM-5): 57564396687 9325088419
+  Nbit-8K-4 (Saturated Counter): 58413869053 8475616053
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
