@@ -277,7 +277,7 @@ public:
 	BTFNTPredictor() {};
 	~BTFNTPredictor() {};
 
-	virtual bool predict(ADDRINT ip, ADDRINT target){ return ip < target; }
+	virtual bool predict(ADDRINT ip, ADDRINT target){ return ip > target; }
 	
 	virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target){
 		updateCounters(predicted, actual);
