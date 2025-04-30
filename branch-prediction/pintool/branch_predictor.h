@@ -169,7 +169,7 @@ public:
 
 	~BTBPredictor() {
 		for (int i = 0; i < sets; i++)
-			delete BTB[i];
+			delete[] BTB[i];
 		delete[] BTB;
 		delete[] replacement_index;
 	}
