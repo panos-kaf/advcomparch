@@ -50,7 +50,7 @@ for filename in log_files:
                         counts[predictor_name] += 1
 
 # Compute average MPKI per predictor
-predictors = sorted(mpki_totals.keys())
+predictors = mpki_totals.keys()
 average_mpki = [mpki_totals[p] / counts[p] for p in predictors]
 
 # Plotting
@@ -66,6 +66,8 @@ ax.set_ylabel("Average MPKI")
 ax.bar(xAx, average_mpki, color="orange", edgecolor="black")
 
 for i, val in enumerate(average_mpki):
+    if val < 0.05:
+        continue
     ax.text(
         xAx[i], val/2,            # halfway up the bar
         f"{val:.2f}",             # format the value
