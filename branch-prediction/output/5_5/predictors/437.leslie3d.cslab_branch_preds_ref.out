@@ -1,12 +1,12 @@
 Total Instructions: 1516975673973
 
 RAS: (Correct - Incorrect)
-RAS (4 entries): 1253010 26577
-RAS (8 entries): 1279582 5
-RAS (16 entries): 1279587 0
-RAS (32 entries): 1279587 0
-RAS (48 entries): 1279587 0
-RAS (64 entries): 1279587 0
+RAS-4_entries: 1253010 26577
+RAS-8_entries: 1279582 5
+RAS-16_entries: 1279587 0
+RAS-32_entries: 1279587 0
+RAS-48_entries: 1279587 0
+RAS-64_entries: 1279587 0
 
 Branch Predictors: (Name - Correct - Incorrect)
 
