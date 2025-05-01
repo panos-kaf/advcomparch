@@ -1,0 +1,18 @@
+Total Instructions: 323365427877
+
+RAS: (Correct - Incorrect)
+
+Branch Predictors: (Name - Correct - Incorrect)
+  Static-AlwaysTaken: 4113264125 8300425454
+  Static-BT-FNT: 9984861111 2428828468
+  Nbit-8K-4-Saturated_Counter: 11317045879 1096643700
+  Pentium-M: 11467523834 946165745
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 11713737205 699952374
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 11606087414 807602165
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 11231780474 1181909105
+  GlobalHistory-BHR2-PHT16384-Counter2b: 9872661768 2541027811
+  GlobalHistory-BHR2-PHT8192-Counter4b: 9887494905 2526194674
+  GlobalHistory-BHR4-PHT16384-Counter2b: 10440672763 1973016816
+  GlobalHistory-BHR4-PHT8192-Counter4b: 10481349211 1932340368
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
