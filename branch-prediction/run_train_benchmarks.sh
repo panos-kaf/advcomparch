@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script processes every subfolder in the provided base input directory.
 
-# RUN REF PREDICTORS
+# RUN TRAIN PREDICTORS
 
 # Absolute paths for PIN executable and tool:
 BASE_DIR="/home/panos/dev/advcomparch/branch-prediction"
@@ -10,12 +10,12 @@ PIN_EXE="/home/panos/tools/pin/pin"
 PIN_TOOL="$BASE_DIR/pintool/obj-intel64/cslab_branch.so"
 
 read -p "Enter output exercise directory (e.g. 5_4)" exer
-mkdir -p $BASE_DIR/output/$exer/ref/time_logs
+mkdir -p $BASE_DIR/output/$exer/train/time_logs
 
-outDir="$BASE_DIR/output/$exer/ref"
+outDir="$BASE_DIR/output/$exer/train"
 
 # Base directory that contains all benchmark folders (This is the directory where all the benchmark folders are)
-inputBase="$BASE_DIR/spec_execs_ref_inputs"
+inputBase="$BASE_DIR/spec_execs_train_inputs"
 
 # Loop over every subfolder in the input base directory.
 # By uncommenting the respective lines below you can run either only one benchmark or all benchmarks inside a directory
@@ -44,7 +44,7 @@ for folder in "$inputBase"/*; do
             clean_cmd=$(echo "$line" | sed -n 's/.*\(\.\/.*\)/\1/p')
 
             # PIN output file
-            pinOutFile="$outDir/${BENCH}.cslab_branch_preds_ref.out"
+            pinOutFile="$outDir/${BENCH}.cslab_branch_preds_train.out"
 
             # Construct the complete PIN command.
             pin_cmd="$PIN_EXE -t $PIN_TOOL -o $pinOutFile -- $clean_cmd 1> stdout.log 2> stderr.log"
@@ -58,5 +58,5 @@ for folder in "$inputBase"/*; do
 done
 
 wait
-echo "Ref Predictors. All benchmarks done."
+echo "Train Predictors. All benchmarks done."
 
