@@ -286,17 +286,18 @@ public:
 	virtual string getName() { return "Static-BT-FNT"; };
 };
 
-class LocalPredictor : public BranchPredictor
+class LocalHistoryPredictor : public BranchPredictor
 {
 public:
-    LocalPredictor(int bht_bits_, int history_length_, int cntr_bits_)
+    LocalHistoryPredictor(int bht_bits_, int history_length_, int pht_bits_, int cntr_bits_)
         : BranchPredictor(),
           bht_bits(bht_bits_),
           history_length(history_length_),
+          pht_bits(pht_bits_),
           cntr_bits(cntr_bits_)
     {
         BHT_size = 1 << bht_bits;
-        PHT_size = 1 << history_length;
+        PHT_size = 1 << pht_bits;
 
         BHT = new unsigned int[BHT_size];
         PHT = new unsigned int[PHT_size];
@@ -307,51 +308,58 @@ public:
         COUNTER_MAX = (1 << cntr_bits) - 1;
     }
 
-    ~LocalPredictor() {
+    ~LocalHistoryPredictor() {
         delete[] BHT;
         delete[] PHT;
     }
 
     virtual bool predict(ADDRINT ip, ADDRINT target) {
-        int index = ip % BHT_size;
-        int history_index = BHT[index] % PHT_size;
-        unsigned int counter = PHT[history_index];
+        int bht_index = ip % BHT_size;
+        int history = BHT[bht_index];
+        int pht_index = history % PHT_size;
+
+        unsigned int counter = PHT[pht_index];
         return (counter >> (cntr_bits - 1)) != 0;
     }
 
     virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target) {
-        int index = ip % BHT_size;
-        int history_index = BHT[index] % PHT_size;
+        int bht_index = ip % BHT_size;
+        int history = BHT[bht_index];
+        int pht_index = history % PHT_size;
 
         // Update saturating counter
         if (actual) {
-            if (PHT[history_index] < COUNTER_MAX)
-                PHT[history_index]++;
+            if (PHT[pht_index] < COUNTER_MAX)
+                PHT[pht_index]++;
         } else {
-            if (PHT[history_index] > 0)
-                PHT[history_index]--;
+            if (PHT[pht_index] > 0)
+                PHT[pht_index]--;
         }
 
-        // Update local history in BHT (shift in the actual outcome)
-        BHT[index] = ((BHT[index] << 1) | (actual ? 1 : 0)) & ((1 << history_length) - 1);
+        // Update local history (shift in actual outcome)
+        BHT[bht_index] = ((history << 1) | (actual ? 1 : 0)) & ((1 << history_length) - 1);
 
         updateCounters(predicted, actual);
     }
 
     virtual string getName() {
         std::ostringstream stream;
-        stream << "LocalHistory-" << BHT_size << "-Entries-" << history_length << "-History";
+        stream << "LocalHistory-BHT" << BHT_size
+               << "-PHT" << PHT_size
+               << "-History" << history_length
+               << "-Counters" << cntr_bits;
         return stream.str();
     }
 
 private:
-    int bht_bits, history_length, cntr_bits;
+    int bht_bits, history_length, pht_bits, cntr_bits;
+    int BHT_size, PHT_size;
     unsigned int COUNTER_MAX;
 
-    unsigned int *BHT;  // stores history per branch
-    unsigned int *PHT;  // stores counters
-    int BHT_size, PHT_size;
+    unsigned int *BHT;  // Per-branch local history
+    unsigned int *PHT;  // Saturating counters indexed by local history
 };
+
 
 class GlobalHistoryPredictor : public BranchPredictor
 {
@@ -384,7 +392,6 @@ public:
                 PHT[index]--;
         }
 		
-        GHR = ((GHR << 1) | (actual ? 1 : 0)) & ((1 << history_bits) - 1);
 		GHR = GHR << 1;
 		if (actual) GHR |= 1;
 		GHR &= (1 << history_bits) - 1;	// keep GHR within history_bits
@@ -406,5 +413,72 @@ private:
     unsigned int *PHT;
     unsigned int pht_size;
 };
+
+class TournamentPredictor : public BranchPredictor {
+	public:
+		TournamentPredictor(LocalHistoryPredictor* local, GlobalHistoryPredictor* global, unsigned chooser_bits)
+			: BranchPredictor(), localPredictor(local), globalPredictor(global)
+		{
+			chooser_size = 1 << chooser_bits;
+			chooser_max = 3;
+			chooser_table = new unsigned int[chooser_size]();
+			chooser_mask = chooser_size - 1;
+		}
+	
+		~TournamentPredictor() {
+			delete[] chooser_table;
+		}
+	
+		virtual bool predict(ADDRINT ip, ADDRINT target) override {
+			bool local_pred = localPredictor->predict(ip, target);
+			bool global_pred = globalPredictor->predict(ip, target);
+	
+			unsigned chooser_index = ip & chooser_mask;
+			bool use_global = chooser_table[chooser_index] >> 1;
+	
+			last_ip = ip;
+			last_local_pred = local_pred;
+			last_global_pred = global_pred;
+	
+			return use_global ? global_pred : local_pred;
+		}
+	
+		virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target) override {
+			localPredictor->update(last_local_pred, actual, ip, target);
+			globalPredictor->update(last_global_pred, actual, ip, target);
+	
+			// Update chooser only if predictions differ
+			if (last_local_pred != last_global_pred) {
+				unsigned chooser_index = last_ip & chooser_mask;
+				if (last_global_pred == actual && chooser_table[chooser_index] < chooser_max)
+					chooser_table[chooser_index]++;
+				else if (last_local_pred == actual && chooser_table[chooser_index] > 0)
+					chooser_table[chooser_index]--;
+			}
+	
+			updateCounters(predicted, actual);
+		}
+	
+		virtual string getName() override {
+			std::ostringstream stream;
+			stream << "Tournament-" << chooser_size <<"-entries-" << localPredictor->getName() << "-vs-" << globalPredictor->getName();
+			return stream.str();
+		}
+	
+	private:
+		LocalHistoryPredictor* localPredictor;
+		GlobalHistoryPredictor* globalPredictor;
+	
+		unsigned int* chooser_table;
+		unsigned int chooser_size;
+		unsigned int chooser_max;
+		unsigned int chooser_mask;
+	
+		// For update logic
+		ADDRINT last_ip;
+		bool last_local_pred;
+		bool last_global_pred;
+	};
+
 #endif
  

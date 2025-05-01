@@ -220,6 +220,29 @@ VOID InitStaticPredictors()
 	branch_predictors.push_back(new BTFNTPredictor());
 }
 
+VOID InitPredictorsCombo(){
+
+	branch_predictors.push_back(new AlwaysTakenPredictor());
+	branch_predictors.push_back(new BTFNTPredictor());
+    
+    branch_predictors.push_back(new NbitPredictor(13, 4, 1));
+    
+    branch_predictors.push_back(new PentiumBranchPredictor());
+    
+    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
+    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
+    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
+    
+    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
+    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
+    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
+    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
+
+    
+    branch_predictors.push_back(new TournamentPredictor());
+
+}
+
 VOID InitRas()
 {
     for (UINT32 i = 2; i <= 6; i++){
@@ -241,10 +264,11 @@ int main(int argc, char *argv[])
     // Initialize predictors and RAS vector
 	//InitPredictors_5_3i();
 	//InitPredictors_FSM();
-	InitPredictors_5_3iii();
+	//InitPredictors_5_3iii();
     //InitPredictors_BTB();
     //InitRas();
 	//InitStaticPredictors();
+    InitPredictorsCombo();
 
     // Instrument function calls in order to catch __parsec_roi_{begin,end}
     INS_AddInstrumentFunction(Instruction, 0);
