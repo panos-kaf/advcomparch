@@ -182,7 +182,7 @@ VOID InitPredictors()
     branch_predictors.push_back(pentiumPredictor);
 }
 
-VOID InitPredictors_5_3i()
+VOID InitPredictors_nbit()
 {
     for (int i=1; i <= 4; i++) {
         NbitPredictor *nbitPred = new NbitPredictor(14, i);
@@ -198,7 +198,7 @@ VOID InitPredictors_FSM()
     }
 }
 
-VOID InitPredictors_5_3iii()
+VOID InitPredictors_nbit_same_overhead()
 {
     branch_predictors.push_back(new NbitPredictor(15, 1, 1));       // 32K x 1-bit
 
@@ -220,32 +220,33 @@ VOID InitPredictors_BTB()
     btb_predictors.push_back(new BTBPredictor(64, 8));
 }
 
-VOID InitStaticPredictors()
-{
-	branch_predictors.push_back(new AlwaysTakenPredictor());
-	branch_predictors.push_back(new BTFNTPredictor());
-}
-
 VOID InitPredictorsCombo(){
 
+	// Static
 	branch_predictors.push_back(new AlwaysTakenPredictor());
 	branch_predictors.push_back(new BTFNTPredictor());
     
+	// Best N-bit
     branch_predictors.push_back(new NbitPredictor(13, 4, 1));
     
+	// Pentium
     branch_predictors.push_back(new PentiumMBranchPredictor());
     
+	// Local History
     branch_predictors.push_back(new LocalHistoryPredictor(11, 8, 13, 2));
     branch_predictors.push_back(new LocalHistoryPredictor(12, 4, 13, 2));
     branch_predictors.push_back(new LocalHistoryPredictor(13, 2, 13, 2));
     
+	// Global History
     branch_predictors.push_back(new GlobalHistoryPredictor(2, 14 , 2));
     branch_predictors.push_back(new GlobalHistoryPredictor(2, 13, 4));
     branch_predictors.push_back(new GlobalHistoryPredictor(4, 14, 2));
     branch_predictors.push_back(new GlobalHistoryPredictor(4, 13, 4));
     
+	// Alpha
     branch_predictors.push_back(new Alpha21264Predictor());
     
+	// Tournament Hybrid
     LocalHistoryPredictor* t0_pred0 = new LocalHistoryPredictor(11, 4, 12, 2);
     GlobalHistoryPredictor* t0_pred1 = new GlobalHistoryPredictor(4, 13, 2);
 
@@ -262,7 +263,6 @@ VOID InitPredictorsCombo(){
     branch_predictors.push_back(new TournamentPredictor(t1_pred0, t1_pred1, 11));
     branch_predictors.push_back(new TournamentPredictor(t2_pred0, t2_pred1, 10));
     branch_predictors.push_back(new TournamentPredictor(t3_pred0, t3_pred1, 11));
-
 }
 
 VOID InitRas()
@@ -284,13 +284,12 @@ int main(int argc, char *argv[])
     outFile.open(KnobOutputFile.Value().c_str());
 
     // Initialize predictors and RAS vector
-	//InitPredictors_5_3i();
-	//InitPredictors_FSM();
-	//InitPredictors_5_3iii();
-    //InitPredictors_BTB();
-    //InitRas();
-	//InitStaticPredictors();
-    InitPredictorsCombo();
+	//InitPredictors_nbit();				// 5_3 i)
+	//InitPredictors_FSM();					// 5_3 ii)
+	//InitPredictors_nbit_same_overhead();	// 5_3 iii)
+    //InitPredictors_BTB();					// 5_4
+    //InitRas();							// 5_5
+    InitPredictorsCombo();					// 5_6
 
     // Instrument function calls in order to catch __parsec_roi_{begin,end}
     INS_AddInstrumentFunction(Instruction, 0);
