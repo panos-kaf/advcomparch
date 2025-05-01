@@ -7,6 +7,12 @@
 using namespace std;
 
 #include "branch_predictor.h"
+
+#include "nbit_predictor.h"
+#include "btb_predictor.h"
+#include "static_predictors.h"
+#include "tournament_predictor.h"
+#include "alpha21264_predictor.h"
 #include "pentium_m_predictor/pentium_m_branch_predictor.h"
 #include "ras.h"
 
@@ -227,19 +233,35 @@ VOID InitPredictorsCombo(){
     
     branch_predictors.push_back(new NbitPredictor(13, 4, 1));
     
-    branch_predictors.push_back(new PentiumBranchPredictor());
+    branch_predictors.push_back(new PentiumMBranchPredictor());
     
-    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
-    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
-    branch_predictors.push_back(new LocalHistoryPredictor(X, Z, 13, 2));
+    branch_predictors.push_back(new LocalHistoryPredictor(11, 8, 13, 2));
+    branch_predictors.push_back(new LocalHistoryPredictor(12, 4, 13, 2));
+    branch_predictors.push_back(new LocalHistoryPredictor(13, 2, 13, 2));
     
-    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
-    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
-    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
-    branch_predictors.push_back(new GlobalHistoryPredictor(Z, X));
+    branch_predictors.push_back(new GlobalHistoryPredictor(2, 14 , 2));
+    branch_predictors.push_back(new GlobalHistoryPredictor(2, 13, 4));
+    branch_predictors.push_back(new GlobalHistoryPredictor(4, 14, 2));
+    branch_predictors.push_back(new GlobalHistoryPredictor(4, 13, 4));
+    
+    branch_predictors.push_back(new Alpha21264Predictor());
+    
+    LocalHistoryPredictor* t0_pred0 = new LocalHistoryPredictor(11, 4, 12, 2);
+    GlobalHistoryPredictor* t0_pred1 = new GlobalHistoryPredictor(4, 13, 2);
 
+    LocalHistoryPredictor* t1_pred0 = new LocalHistoryPredictor(10, 8, 12, 2);
+    GlobalHistoryPredictor* t1_pred1 = new GlobalHistoryPredictor(4, 12, 4);
     
-    branch_predictors.push_back(new TournamentPredictor());
+    NbitPredictor* t2_pred0 = new NbitPredictor(13, 2, 1);
+    GlobalHistoryPredictor* t2_pred1 = new GlobalHistoryPredictor(4, 13, 2);
+
+    LocalHistoryPredictor* t3_pred0 = new LocalHistoryPredictor(11, 4, 12, 2);
+    NbitPredictor* t3_pred1 = new NbitPredictor(13, 2, 1);
+
+    branch_predictors.push_back(new TournamentPredictor(t0_pred0, t0_pred1, 10));
+    branch_predictors.push_back(new TournamentPredictor(t1_pred0, t1_pred1, 11));
+    branch_predictors.push_back(new TournamentPredictor(t2_pred0, t2_pred1, 10));
+    branch_predictors.push_back(new TournamentPredictor(t3_pred0, t3_pred1, 11));
 
 }
 
