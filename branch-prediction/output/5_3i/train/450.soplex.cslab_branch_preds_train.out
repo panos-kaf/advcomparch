@@ -1,0 +1,11 @@
+Total Instructions: 7438754573
+
+RAS: (Correct - Incorrect)
+
+Branch Predictors: (Name - Correct - Incorrect)
+  Nbit-16K-1-Saturated_Counter: 1019933209 100689776
+  Nbit-16K-2-Saturated_Counter: 1058353043 62269942
+  Nbit-16K-3-Saturated_Counter: 1057230013 63392972
+  Nbit-16K-4-Saturated_Counter: 1055166697 65456288
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
