@@ -9,8 +9,10 @@ BASE_DIR="/home/panos/dev/advcomparch/branch-prediction"
 PIN_EXE="/home/panos/tools/pin/pin"
 PIN_TOOL="$BASE_DIR/pintool/obj-intel64/cslab_branch.so"
 
-# Output directory for PIN's output -- BE CAREFUL! THE PATH NEEDS TO EXIST!!!
-outDir="$BASE_DIR/output/5_5/predictors"
+read -p "Enter output exercise directory (e.g. 5_4)" exer
+mkdir -p $BASE_DIR/output/$exer/predictors/time_logs
+
+outDir="$BASE_DIR/output/$exer/predictors"
 
 # Base directory that contains all benchmark folders (This is the directory where all the benchmark folders are)
 inputBase="$BASE_DIR/spec_execs_ref_inputs"
@@ -49,9 +51,8 @@ for folder in "$inputBase"/*; do
             echo "PIN_CMD: $pin_cmd"
 
             # Execute the command while measuring time; timing output goes to a log file.
-            # { /bin/bash -c "$pin_cmd" ; }
-	    # You can also measure execution time if you run it like this: 
-            { time /bin/bash -c "$pin_cmd" ; } &> "$outDir/${BENCH}_timing.log"
+			# You can also measure execution time if you run it like this: 
+            { time /bin/bash -c "$pin_cmd" ; } &> "$outDir/time_logs/${BENCH}_timing.log"
         ) &
     fi
 done
