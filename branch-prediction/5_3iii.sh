@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script processes every subfolder in the provided base input directory.
 
-# RUN TRAIN PREDICTORS
+# RUN REF PREDICTORS
 
 # Absolute paths for PIN executable and tool:
 BASE_DIR="/home/panos/dev/advcomparch/branch-prediction"
@@ -42,7 +42,7 @@ for folder in "$inputBase"/*; do
             clean_cmd=$(echo "$line" | sed -n 's/.*\(\.\/.*\)/\1/p')
 
             # PIN output file
-            pinOutFile="$outDir/${BENCH}.cslab_branch_preds_train.out"
+            pinOutFile="$outDir/${BENCH}.cslab_branch_preds_ref.out"
 
             # Construct the complete PIN command.
             pin_cmd="$PIN_EXE -t $PIN_TOOL -o $pinOutFile -- $clean_cmd 1> stdout.log 2> stderr.log"
@@ -57,5 +57,5 @@ for folder in "$inputBase"/*; do
 done
 
 wait
-echo "Train Predictors. All benchmarks done."
+echo "Ref Predictors. All benchmarks done."
 

@@ -10,10 +10,10 @@ PIN_EXE="/home/panos/tools/pin/pin"
 PIN_TOOL="$BASE_DIR/pintool/obj-intel64/cslab_branch.so"
 
 # Output directory for PIN's output -- BE CAREFUL! THE PATH NEEDS TO EXIST!!!
-outDir="$BASE_DIR/output/5_3i/predictors"
+outDir="$BASE_DIR/output/5_6/predictors"
 
 # Base directory that contains all benchmark folders (This is the directory where all the benchmark folders are)
-inputBase="$BASE_DIR/spec_execs_ref_inputs"
+inputBase="$BASE_DIR/spec_execs_train_inputs"
 
 # Loop over every subfolder in the input base directory.
 # By uncommenting the respective lines below you can run either only one benchmark or all benchmarks inside a directory
@@ -49,9 +49,9 @@ for folder in "$inputBase"/*; do
             echo "PIN_CMD: $pin_cmd"
 
             # Execute the command while measuring time; timing output goes to a log file.
-            { /bin/bash -c "$pin_cmd" ; }
+            # { /bin/bash -c "$pin_cmd" ; }
 	    # You can also measure execution time if you run it like this: 
-            # { time /bin/bash -c "$pin_cmd" ; } &> "$outDir/${BENCH}_timing.log"
+            { time /bin/bash -c "$pin_cmd" ; } &> "$outDir/${BENCH}_timing.log"
         ) &
     fi
 done
