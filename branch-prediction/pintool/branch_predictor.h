@@ -286,5 +286,125 @@ public:
 	virtual string getName() { return "Static-BT-FNT"; };
 };
 
+class LocalPredictor : public BranchPredictor
+{
+public:
+    LocalPredictor(int bht_bits_, int history_length_, int cntr_bits_)
+        : BranchPredictor(),
+          bht_bits(bht_bits_),
+          history_length(history_length_),
+          cntr_bits(cntr_bits_)
+    {
+        BHT_size = 1 << bht_bits;
+        PHT_size = 1 << history_length;
+
+        BHT = new unsigned int[BHT_size];
+        PHT = new unsigned int[PHT_size];
+
+        memset(BHT, 0, sizeof(unsigned int) * BHT_size);
+        memset(PHT, 0, sizeof(unsigned int) * PHT_size);
+
+        COUNTER_MAX = (1 << cntr_bits) - 1;
+    }
+
+    ~LocalPredictor() {
+        delete[] BHT;
+        delete[] PHT;
+    }
+
+    virtual bool predict(ADDRINT ip, ADDRINT target) {
+        int index = ip % BHT_size;
+        int history_index = BHT[index] % PHT_size;
+        unsigned int counter = PHT[history_index];
+        return (counter >> (cntr_bits - 1)) != 0;
+    }
+
+    virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target) {
+        int index = ip % BHT_size;
+        int history_index = BHT[index] % PHT_size;
+
+        // Update saturating counter
+        if (actual) {
+            if (PHT[history_index] < COUNTER_MAX)
+                PHT[history_index]++;
+        } else {
+            if (PHT[history_index] > 0)
+                PHT[history_index]--;
+        }
+
+        // Update local history in BHT (shift in the actual outcome)
+        BHT[index] = ((BHT[index] << 1) | (actual ? 1 : 0)) & ((1 << history_length) - 1);
+
+        updateCounters(predicted, actual);
+    }
+
+    virtual string getName() {
+        std::ostringstream stream;
+        stream << "LocalHistory-" << BHT_size << "-Entries-" << history_length << "-History";
+        return stream.str();
+    }
+
+private:
+    int bht_bits, history_length, cntr_bits;
+    unsigned int COUNTER_MAX;
+
+    unsigned int *BHT;  // stores history per branch
+    unsigned int *PHT;  // stores counters
+    int BHT_size, PHT_size;
+};
+
+class GlobalHistoryPredictor : public BranchPredictor
+{
+public:
+    GlobalHistoryPredictor(unsigned history_bits_, unsigned cntr_bits_): 
+	BranchPredictor(), history_bits(history_bits_), cntr_bits(cntr_bits_), GHR(0)
+    {
+        pht_size = 1 << history_bits;
+        COUNTER_MAX = (1 << cntr_bits) - 1;
+
+        PHT = new unsigned int[pht_size];
+        memset(PHT, 0, sizeof(unsigned int) * pht_size);
+    }
+
+    ~GlobalHistoryPredictor() { delete[] PHT; }
+
+    virtual bool predict(ADDRINT ip, ADDRINT target) {
+        unsigned int counter = PHT[GHR]; 	// use GHR to index PHT
+        return (counter >> (cntr_bits - 1)) != 0;
+    }
+
+    virtual void update(bool predicted, bool actual, ADDRINT ip, ADDRINT target) {
+        unsigned int index = GHR;
+
+		if (actual) {
+            if (PHT[index] < COUNTER_MAX)
+                PHT[index]++;
+        } else {
+            if (PHT[index] > 0)
+                PHT[index]--;
+        }
+		
+        GHR = ((GHR << 1) | (actual ? 1 : 0)) & ((1 << history_bits) - 1);
+		GHR = GHR << 1;
+		if (actual) GHR |= 1;
+		GHR &= (1 << history_bits) - 1;	// keep GHR within history_bits
+
+        updateCounters(predicted, actual);
+    }
+
+    virtual string getName() {
+        std::ostringstream stream;
+        stream << "GlobalHistory-" << history_bits << "-bit-" << cntr_bits << "-counter";
+        return stream.str();
+    }
+
+private:
+    unsigned int history_bits, cntr_bits;
+    unsigned int COUNTER_MAX;
+
+    unsigned int GHR;
+    unsigned int *PHT;
+    unsigned int pht_size;
+};
 #endif
  
