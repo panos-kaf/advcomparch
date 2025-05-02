@@ -1,18 +1,23 @@
-Total Instructions: 96483399248
+Total Instructions: 1273858825696
 
 RAS: (Correct - Incorrect)
 
 Branch Predictors: (Name - Correct - Incorrect)
-  Static-AlwaysTaken: 176492204 922282145
-  Static-BT-FNT: 834314058 264460291
-  Nbit-8K-4-Saturated_Counter: 1023615475 75158874
-  Pentium-M: 1070532700 28241649
-  LocalHistory-BHT2048-PHT8192-History8-Counters2: 1081384765 17389584
-  LocalHistory-BHT4096-PHT8192-History4-Counters2: 1081286197 17488152
-  LocalHistory-BHT8192-PHT8192-History2-Counters2: 1078593127 20181222
-  GlobalHistory-BHR2-PHT16384-Counter2b: 1065757791 33016558
-  GlobalHistory-BHR2-PHT8192-Counter4b: 1067516373 31257976
-  GlobalHistory-BHR4-PHT16384-Counter2b: 1075318367 23455982
-  GlobalHistory-BHR4-PHT8192-Counter4b: 1077757234 21017115
+  Static-AlwaysTaken: 527480225 11071876755
+  Static-BT-FNT: 7860444679 3738912301
+  Nbit-8K-4-Saturated_Counter: 11447709300 151647680
+  Pentium-M: 11399723737 199633243
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 11546282479 53074501
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 11545160560 54196420
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 11538771759 60585221
+  GlobalHistory-BHR2-PHT16384-Counter2b: 11494388755 104968225
+  GlobalHistory-BHR2-PHT8192-Counter4b: 11496573841 102783139
+  GlobalHistory-BHR4-PHT16384-Counter2b: 11533232320 66124660
+  GlobalHistory-BHR4-PHT8192-Counter4b: 11531938788 67418192
+  Alpha21264Hybrid: 11546935632 52421348
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 11545177543 54179437
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 11546296685 53060295
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 11538724456 60632524
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 11545176260 54180720
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)

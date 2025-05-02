@@ -1,18 +1,23 @@
-Total Instructions: 3184165116
+Total Instructions: 142157875921
 
 RAS: (Correct - Incorrect)
 
 Branch Predictors: (Name - Correct - Incorrect)
-  Static-AlwaysTaken: 269634879 304829712
-  Static-BT-FNT: 400863075 173601516
-  Nbit-8K-4-Saturated_Counter: 521701390 52763201
-  Pentium-M: 471719935 102744656
-  LocalHistory-BHT2048-PHT8192-History8-Counters2: 525415314 49049277
-  LocalHistory-BHT4096-PHT8192-History4-Counters2: 517318260 57146331
-  LocalHistory-BHT8192-PHT8192-History2-Counters2: 511201497 63263094
-  GlobalHistory-BHR2-PHT16384-Counter2b: 404198222 170266369
-  GlobalHistory-BHR2-PHT8192-Counter4b: 418830184 155634407
-  GlobalHistory-BHR4-PHT16384-Counter2b: 423776260 150688331
-  GlobalHistory-BHR4-PHT8192-Counter4b: 436074322 138390269
+  Static-AlwaysTaken: 12297042035 13570899238
+  Static-BT-FNT: 18221693482 7646247791
+  Nbit-8K-4-Saturated_Counter: 23665545408 2202395865
+  Pentium-M: 20764384204 5103557069
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 23999847076 1868094197
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 23572083183 2295858090
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 23260364977 2607576296
+  GlobalHistory-BHR2-PHT16384-Counter2b: 18259314034 7608627239
+  GlobalHistory-BHR2-PHT8192-Counter4b: 18986337174 6881604099
+  GlobalHistory-BHR4-PHT16384-Counter2b: 19577905798 6290035475
+  GlobalHistory-BHR4-PHT8192-Counter4b: 20158089555 5709851718
+  Alpha21264Hybrid: 24688882548 1179058725
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 23489878378 2378062895
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 23876688267 1991253006
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 23722139014 2145802259
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 23887320110 1980621163
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)

@@ -1,18 +1,23 @@
-Total Instructions: 7439410192
+Total Instructions: 351948954180
 
 RAS: (Correct - Incorrect)
 
 Branch Predictors: (Name - Correct - Incorrect)
-  Static-AlwaysTaken: 640385384 483006038
-  Static-BT-FNT: 901803443 221587979
-  Nbit-8K-4-Saturated_Counter: 1056226540 67164882
-  Pentium-M: 1027547788 95843634
-  LocalHistory-BHT2048-PHT8192-History8-Counters2: 1070144532 53246890
-  LocalHistory-BHT4096-PHT8192-History4-Counters2: 1061251701 62139721
-  LocalHistory-BHT8192-PHT8192-History2-Counters2: 1056223004 67168418
-  GlobalHistory-BHR2-PHT16384-Counter2b: 913536072 209855350
-  GlobalHistory-BHR2-PHT8192-Counter4b: 918607845 204783577
-  GlobalHistory-BHR4-PHT16384-Counter2b: 960687424 162703998
-  GlobalHistory-BHR4-PHT8192-Counter4b: 963110166 160281256
+  Static-AlwaysTaken: 31508798891 20454407843
+  Static-BT-FNT: 42010690743 9952515991
+  Nbit-8K-4-Saturated_Counter: 49315248538 2647958196
+  Pentium-M: 48080016438 3883190296
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 49721022212 2242184522
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 49490760219 2472446515
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 49391697742 2571508992
+  GlobalHistory-BHR2-PHT16384-Counter2b: 43390440105 8572766629
+  GlobalHistory-BHR2-PHT8192-Counter4b: 43698941143 8264265591
+  GlobalHistory-BHR4-PHT16384-Counter2b: 45514611904 6448594830
+  GlobalHistory-BHR4-PHT8192-Counter4b: 45515854560 6447352174
+  Alpha21264Hybrid: 50224375653 1738831081
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 49447164126 2516042608
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 49694303513 2268903221
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 49456333163 2506873571
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 49525962631 2437244103
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)

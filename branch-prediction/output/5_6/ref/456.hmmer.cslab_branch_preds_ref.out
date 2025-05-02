@@ -1,18 +1,23 @@
-Total Instructions: 268784251133
+Total Instructions: 875483163300
 
 RAS: (Correct - Incorrect)
 
 Branch Predictors: (Name - Correct - Incorrect)
-  Static-AlwaysTaken: 8669663918 4743904322
-  Static-BT-FNT: 13132806141 280762099
-  Nbit-8K-4-Saturated_Counter: 13218052900 195515340
-  Pentium-M: 13134953610 278614630
-  LocalHistory-BHT2048-PHT8192-History8-Counters2: 13211507358 202060882
-  LocalHistory-BHT4096-PHT8192-History4-Counters2: 13208247904 205320336
-  LocalHistory-BHT8192-PHT8192-History2-Counters2: 13121580486 291987754
-  GlobalHistory-BHR2-PHT16384-Counter2b: 12733141000 680427240
-  GlobalHistory-BHR2-PHT8192-Counter4b: 12872499760 541068480
-  GlobalHistory-BHR4-PHT16384-Counter2b: 13094726510 318841730
-  GlobalHistory-BHR4-PHT8192-Counter4b: 13111761196 301807044
+  Static-AlwaysTaken: 27398618136 14228702965
+  Static-BT-FNT: 41332713316 294607785
+  Nbit-8K-4-Saturated_Counter: 41457061599 170259502
+  Pentium-M: 41397614092 229707009
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 41451128748 176192353
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 41447910849 179410252
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 41349557633 277763468
+  GlobalHistory-BHR2-PHT16384-Counter2b: 41039535892 587785209
+  GlobalHistory-BHR2-PHT8192-Counter4b: 41130174861 497146240
+  GlobalHistory-BHR4-PHT16384-Counter2b: 41284186966 343134135
+  GlobalHistory-BHR4-PHT8192-Counter4b: 41295541552 331779549
+  Alpha21264Hybrid: 41505445381 121875720
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 41489824113 137496988
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 41492255123 135065978
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 41497210017 130111084
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 41454132462 173188639
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)

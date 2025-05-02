@@ -1,18 +1,23 @@
-Total Instructions: 323365427877
+Total Instructions: 2070986412827
 
 RAS: (Correct - Incorrect)
 
 Branch Predictors: (Name - Correct - Incorrect)
-  Static-AlwaysTaken: 4113264125 8300425454
-  Static-BT-FNT: 9984861111 2428828468
-  Nbit-8K-4-Saturated_Counter: 11317045879 1096643700
-  Pentium-M: 11467523834 946165745
-  LocalHistory-BHT2048-PHT8192-History8-Counters2: 11713737205 699952374
-  LocalHistory-BHT4096-PHT8192-History4-Counters2: 11606087414 807602165
-  LocalHistory-BHT8192-PHT8192-History2-Counters2: 11231780474 1181909105
-  GlobalHistory-BHR2-PHT16384-Counter2b: 9872661768 2541027811
-  GlobalHistory-BHR2-PHT8192-Counter4b: 9887494905 2526194674
-  GlobalHistory-BHR4-PHT16384-Counter2b: 10440672763 1973016816
-  GlobalHistory-BHR4-PHT8192-Counter4b: 10481349211 1932340368
+  Static-AlwaysTaken: 26179758871 52980567939
+  Static-BT-FNT: 63777267067 15383059743
+  Nbit-8K-4-Saturated_Counter: 72165883466 6994443344
+  Pentium-M: 73133607979 6026718831
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 74691788628 4468538182
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 74007960505 5152366305
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 71610680569 7549646241
+  GlobalHistory-BHR2-PHT16384-Counter2b: 63036895371 16123431439
+  GlobalHistory-BHR2-PHT8192-Counter4b: 63118517210 16041809600
+  GlobalHistory-BHR4-PHT16384-Counter2b: 66655378222 12504948588
+  GlobalHistory-BHR4-PHT8192-Counter4b: 66896535877 12263790933
+  Alpha21264Hybrid: 75756119640 3404207170
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 74275560893 4884765917
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 74879432490 4280894320
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 74152769490 5007557320
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 74661380045 4498946765
 
 BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
