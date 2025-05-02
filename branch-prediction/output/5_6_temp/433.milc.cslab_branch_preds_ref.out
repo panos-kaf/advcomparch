@@ -1,0 +1,23 @@
+Total Instructions: 1169067600775
+
+RAS: (Correct - Incorrect)
+
+Branch Predictors: (Name - Correct - Incorrect)
+  Static-AlwaysTaken: 36675874276 16584639412
+  Static-BT-FNT: 37961012286 15299501402
+  Nbit-8K-4-Saturated_Counter: 38359949262 14900564426
+  Pentium-M: 51816461784 1444051904
+  LocalHistory-BHT2048-PHT8192-History8-Counters2: 53239133137 21380551
+  LocalHistory-BHT4096-PHT8192-History4-Counters2: 53162123836 98389852
+  LocalHistory-BHT8192-PHT8192-History2-Counters2: 49642271004 3618242684
+  GlobalHistory-BHR2-PHT16384-Counter2b: 35016781601 18243732087
+  GlobalHistory-BHR2-PHT8192-Counter4b: 38831000455 14429513233
+  GlobalHistory-BHR4-PHT16384-Counter2b: 48273392660 4987121028
+  GlobalHistory-BHR4-PHT8192-Counter4b: 48371744871 4888768817
+  Alpha21264Hybrid: 53247277340 13236348
+  Tournament-1024-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 53102279848 158233840
+  Tournament-2048-entries-LocalHistory-BHT1024-PHT4096-History8-Counters2-vs-GlobalHistory-BHR4-PHT4096-Counter4b: 53242217726 18295962
+  Tournament-1024-entries-Nbit-8K-2-Saturated_Counter-vs-GlobalHistory-BHR4-PHT8192-Counter2b: 49029763330 4230750358
+  Tournament-2048-entries-LocalHistory-BHT2048-PHT4096-History4-Counters2-vs-Nbit-8K-2-Saturated_Counter: 53165291955 95221733
+
+BTB Predictors: (Name - Correct - Incorrect - TargetCorrect)
