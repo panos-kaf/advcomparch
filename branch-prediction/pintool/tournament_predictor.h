@@ -2,7 +2,6 @@
 #define TOURNAMENT_PREDICTOR_H
 
 #include "branch_predictor.h"
-
 	
 class TournamentPredictor : public BranchPredictor {
     public:
@@ -10,14 +9,12 @@ class TournamentPredictor : public BranchPredictor {
             : predictor0(P0), predictor1(P1)
         {
             chooser_size = 1 << chooser_bits;
-            chooser_max = 3;  // Assuming a 2-bit saturating counter
+            chooser_max = 3;
             chooser_table = new unsigned int[chooser_size]();
             chooser_mask = chooser_size - 1;
         }
     
-        ~TournamentPredictor() {
-            delete[] chooser_table;
-        }
+        ~TournamentPredictor() { delete[] chooser_table; }
     
         virtual bool predict(ADDRINT ip, ADDRINT target) override {
             bool pred0 = predictor0->predict(ip, target);
