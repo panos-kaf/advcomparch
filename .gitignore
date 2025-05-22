@@ -4,3 +4,5 @@ branch-prediction/spec_execs*/
 advcomparch-ex2-helpcode/
 
 memory-hierarchy/spec_benchmarks/
+
+**/.vscode
