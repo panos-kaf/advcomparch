@@ -36,14 +36,17 @@ class CACHE_TAG
 {
   private:
     ADDRINT _tag;
+    int _freq;  // for LFU
 
   public:
-    CACHE_TAG(ADDRINT tag = 0) : _tag(tag) {}
+    CACHE_TAG(ADDRINT tag = 0) : _tag(tag) { _freq = 0; }
     bool operator==(const CACHE_TAG &right) const { return _tag == right._tag; }
     operator ADDRINT() const { return _tag; }
+
+    void incr_freq() { _freq++; }
+    int get_freq() { return _freq; }
 };
 CACHE_TAG INVALID_TAG(-1);
-
 
 /**
  * Everything related to cache sets
@@ -212,7 +215,44 @@ class RANDOM
     }
 };
 
+class LFU: public POLICY
+{
+    public:
+        LFU(UINT32 associativity = 8) : POLICY(associativity) {}
 
+        virtual string Name() { return "LFU"; }
+
+        virtual UINT32 Find(CACHE_TAG tag)
+        {
+            for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+                it != _tags.end(); ++it)
+                {
+                    if (*it == tag){
+                        tag.incr_freq();
+                        return true;
+                    }
+                }
+            return false;
+        }
+
+        virtual CACHE_TAG Replace(CACHE_TAG tag)
+        {
+            //CACHE_TAG ret = INVALID_TAG;
+            int lfu = _tags[0].get_freq();
+
+            for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+                it != _tags.end(); ++it)
+            {
+                if (it->get_freq() < lfu) {
+                    lfu = it->get_freq();
+                    //ret = it;
+                }
+            }
+            
+					return 0;
+        }
+
+};
 
 
 } // namespace CACHE_SET
