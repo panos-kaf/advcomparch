@@ -54,28 +54,53 @@ namespace CACHE_SET
 // ************************
 // Change this class and implement policy to evict random block!
 // ************************
+class POLICY{
 
-class LRU 
+    protected:
+        std::vector<CACHE_TAG> _tags;
+        UINT32 _associativity;
+
+    public:
+        POLICY(UINT32 associativity = 8)
+        {
+            _associativity = associativity;
+            _tags.clear();
+        }
+
+        virtual ~POLICY() {};
+
+        VOID SetAssociativity(UINT32 associativity)
+        {
+            _associativity = associativity;
+            _tags.clear();
+        }
+        UINT32 GetAssociativity() { return _associativity; }
+
+        virtual string Name() = 0;
+
+        virtual UINT32 Find(CACHE_TAG tag) = 0;
+
+        virtual CACHE_TAG Replace(CACHE_TAG tag) = 0;
+
+        VOID DeleteIfPresent(CACHE_TAG tag)
+        {
+            for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+                it != _tags.end(); ++it)
+            {
+                if (*it == tag) { // Tag found
+                    _tags.erase(it);
+                    break;
+                }
+            }
+        }
+};
+
+class LRU : public POLICY
 {
-  protected:
-    std::vector<CACHE_TAG> _tags;
-    UINT32 _associativity;
-
  public:
-    LRU(UINT32 associativity = 8)
-    {
-        _associativity = associativity;
-        _tags.clear();
-    }
+    LRU(UINT32 associativity = 8) : POLICY(associativity) {}
 
-    VOID SetAssociativity(UINT32 associativity)
-    {
-        _associativity = associativity;
-        _tags.clear();
-    }
-    UINT32 GetAssociativity() { return _associativity; }
-
-    string Name() { return "LRU"; }
+    string Name() const override { return "LRU"; }
     
     UINT32 Find(CACHE_TAG tag)
     {
@@ -103,18 +128,34 @@ class LRU
         return ret;
     }
     
-    VOID DeleteIfPresent(CACHE_TAG tag)
-    {
-        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
-             it != _tags.end(); ++it)
-        {
-            if (*it == tag) { // Tag found
-                _tags.erase(it);
-                break;
-            }
-        }
-    }
 };
+
+class RANDOM: public POLICY
+{
+    public:
+        RANDOM(UINT32 associativity = 8) : POLICY(associativity) { srand(18939); }
+
+        string Name() const override { return "RANDOM"; }
+
+        UINT32 Find(CACHE_TAG tag) override{           
+            for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+                it != _tags.end(); ++it)
+            {
+                if (*it == tag) return true;
+            }
+            return false;
+        }
+
+        CACHE_TAG Replace(CACHE_TAG tag) override{
+            CACHE_TAG ret;
+            int replacement_index = rand() % associativity;
+            ret = _tags[replacement_index];
+            _tags[replacement_index] = tag;
+            return ret; 
+        }
+
+}
+
 
 } // namespace CACHE_SET
 
