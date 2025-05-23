@@ -1,5 +1,4 @@
-/bin/bash: line 1: 1311167 Segmentation fault      (core dumped) /home/panos/tools/pin/pin -t /home/panos/dev/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so -o /home/panos/dev/advcomparch/memory-hierarchy/output/random/433.milc/433.milc.cslab_cache_stats_L2_LRU_2048_16_064.out -L1c 32 -L1a 4 -L1b 32 -L2c 2048 -L2a 16 -L2b 64 -- ./milc_base.gcc49-static < su3imp.in > su3imp.out
 
-real	0m0.154s
-user	0m0.016s
-sys	0m0.036s
+real	0m0.034s
+user	0m0.010s
+sys	0m0.013s

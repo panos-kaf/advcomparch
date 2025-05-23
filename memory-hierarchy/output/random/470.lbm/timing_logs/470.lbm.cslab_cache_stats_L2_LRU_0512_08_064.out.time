@@ -1,5 +1,4 @@
-/bin/bash: line 1: 1309559 Segmentation fault      (core dumped) /home/panos/tools/pin/pin -t /home/panos/dev/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so -o /home/panos/dev/advcomparch/memory-hierarchy/output/random/470.lbm/470.lbm.cslab_cache_stats_L2_LRU_0512_08_064.out -L1c 32 -L1a 4 -L1b 32 -L2c 512 -L2a 8 -L2b 64 -- ./lbm_base.gcc49-static 300 reference.dat 0 1 100_100_130_cf_b.of > lbm.out
 
-real	0m0.176s
-user	0m0.011s
-sys	0m0.053s
+real	0m0.033s
+user	0m0.009s
+sys	0m0.012s

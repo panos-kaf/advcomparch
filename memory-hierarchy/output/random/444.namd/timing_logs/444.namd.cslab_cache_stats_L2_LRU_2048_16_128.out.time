@@ -1,6 +1,5 @@
-C: [tid:1311390] Tool (or Pin) caused signal 11 at PC 0x7107cf4c6bb1
-./run_benchmarks.sh: line 62: 1311390 Segmentation fault      (core dumped) /bin/bash -c "$pin_cmd"
+E: Unable to resolve tool path./home/panos/dev/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so. Check tools path and tool extension.
 
-real	0m0.191s
-user	0m0.017s
-sys	0m0.053s
+real	0m0.030s
+user	0m0.012s
+sys	0m0.009s
