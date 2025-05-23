@@ -100,9 +100,9 @@ class LRU : public POLICY
  public:
     LRU(UINT32 associativity = 8) : POLICY(associativity) {}
 
-    string Name() const override { return "LRU"; }
+    virtual string Name() { return "LRU"; }
     
-    UINT32 Find(CACHE_TAG tag)
+    virtual UINT32 Find(CACHE_TAG tag)
     {
         for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
              it != _tags.end(); ++it)
@@ -117,7 +117,7 @@ class LRU : public POLICY
         return false;
     }
 
-    CACHE_TAG Replace(CACHE_TAG tag)
+    virtual CACHE_TAG Replace(CACHE_TAG tag)
     {
         CACHE_TAG ret = INVALID_TAG;
         _tags.push_back(tag);
@@ -130,14 +130,14 @@ class LRU : public POLICY
     
 };
 
-class RANDOM: public POLICY
+/*class RANDOM: public POLICY
 {
     public:
         RANDOM(UINT32 associativity = 8) : POLICY(associativity) { srand(18939); }
 
-        string Name() const override { return "RANDOM"; }
+        virtual string Name() { return "RANDOM"; }
 
-        UINT32 Find(CACHE_TAG tag) override{           
+        virtual UINT32 Find(CACHE_TAG tag) override{           
             for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
                 it != _tags.end(); ++it)
             {
@@ -146,15 +146,73 @@ class RANDOM: public POLICY
             return false;
         }
 
-        CACHE_TAG Replace(CACHE_TAG tag) override{
+        virtual CACHE_TAG Replace(CACHE_TAG tag) override{
             CACHE_TAG ret;
-            int replacement_index = rand() % associativity;
+            int replacement_index = rand() % _associativity;
             ret = _tags[replacement_index];
             _tags[replacement_index] = tag;
             return ret; 
         }
 
-}
+};*/
+class RANDOM
+{
+  protected:
+    std::vector<CACHE_TAG> _tags;
+    UINT32 _associativity;
+
+ public:
+    RANDOM(UINT32 associativity = 8)
+    {
+        _associativity = associativity;
+        _tags.clear();
+		srandom(18939);
+    }
+
+    VOID SetAssociativity(UINT32 associativity)
+    {
+        _associativity = associativity;
+        _tags.clear();
+    }
+    UINT32 GetAssociativity() { return _associativity; }
+
+    string Name() { return "RANDOM"; }
+    
+    UINT32 Find(CACHE_TAG tag)
+    {
+        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+             it != _tags.end(); ++it)
+        {
+            if (*it == tag) { // Tag found, lets make it MRU
+                return true;
+            }
+        }
+        return false;
+    }
+
+    CACHE_TAG Replace(CACHE_TAG tag)
+    {
+		CACHE_TAG ret;
+		int replacement_index = rand() % _tags.size();
+		ret = _tags[replacement_index];
+		_tags[replacement_index] = tag;
+		return ret; 
+    }
+    
+    VOID DeleteIfPresent(CACHE_TAG tag)
+    {
+        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+             it != _tags.end(); ++it)
+        {
+            if (*it == tag) { // Tag found
+                _tags.erase(it);
+                break;
+            }
+        }
+    }
+};
+
+
 
 
 } // namespace CACHE_SET
