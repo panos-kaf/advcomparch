@@ -1,0 +1,6 @@
+C: [tid:1314501] Tool (or Pin) caused signal 11 at PC 0x7050c5457bb1
+./run_benchmarks.sh: line 62: 1314501 Segmentation fault      (core dumped) /bin/bash -c "$pin_cmd"
+
+real	0m0.179s
+user	0m0.012s
+sys	0m0.058s
