@@ -8,13 +8,14 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import re
 
 def geomean(values):
     logs = [math.log(v) for v in values if v > 0]
     return math.exp(sum(logs) / len(logs)) if logs else 0
 
 if len(sys.argv) != 2:
-    print("Usage: python3 plot_l2_mpki_ipc.py <root_directory>")
+    print("Usage: python3 plot_l2.py <root_directory>")
     sys.exit(1)
 
 root_dir = sys.argv[1]
@@ -57,28 +58,40 @@ for subdir in subdirs:
         summary_ipc.append(geomean(ipc_vals))
         labels.append(subdir)
 
-# Plot summary MPKI
+
+# Function to extract tuple of ints for sorting (e.g. '1024_8_64' → (1024, 8, 64))
+def extract_config_values(label):
+    return tuple(int(x) for x in label.split('_'))
+
+# Zip and sort based on config values
+combined = sorted(zip(labels, summary_mpki, summary_ipc), key=lambda x: extract_config_values(x[0]))
+labels, summary_mpki, summary_ipc = zip(*combined)
+
 x = np.arange(len(labels))
+
+# Plot summary MPKI
 plt.figure(figsize=(14, 7))
-plt.bar(x, summary_mpki, color='orange', edgecolor='black')
+plt.plot(x, summary_mpki, marker='x', linestyle='-', color='orange', markeredgecolor='black')
 plt.xticks(x, labels, rotation=60, ha='right')
-plt.ylabel("L2 MPKI (Geomean)")
-plt.title("Geometric Mean of L2 MPKI by Configuration")
+plt.ylabel("L2 MPKI (Geometric Mean)")
+plt.title("MPKI by L2 Organization")
 for i, v in enumerate(summary_mpki):
-    plt.text(x[i], v / 2, f"{v:.2f}", ha='center', va='center', fontsize=9)
+    plt.text(x[i] + 0.4, v, f"{v:.2f}", ha='center', va='bottom', fontsize=9)
+plt.grid(True)
 plt.tight_layout()
-mpki_filename = input("Filename for MPKI chart (e.g. mpki_summary.png): ")
+mpki_filename = input("Filename for MPKI chart: ")
 plt.savefig(mpki_filename, bbox_inches='tight')
 
 # Plot summary IPC
 plt.figure(figsize=(14, 7))
-plt.bar(x, summary_ipc, color='skyblue', edgecolor='black')
+plt.plot(x, summary_ipc, marker='x', linestyle='-', color='green', markeredgecolor='black')
 plt.xticks(x, labels, rotation=60, ha='right')
-plt.ylabel("IPC (Geomean)")
-plt.title("Geometric Mean of IPC by Configuration")
+plt.ylabel("IPC (Geometric Mean)")
+plt.title("IPC by L2 Organization")
 for i, v in enumerate(summary_ipc):
-    plt.text(x[i], v / 2, f"{v:.2f}", ha='center', va='center', fontsize=9)
+    plt.text(x[i] + 0.4, v, f"{v:.2f}", ha='center', va='bottom', fontsize=9)
+plt.grid(True)
 plt.tight_layout()
-ipc_filename = input("Filename for IPC chart (e.g. ipc_summary.png): ")
+ipc_filename = input("Filename for IPC chart: ")
 plt.savefig(ipc_filename, bbox_inches='tight')
 
