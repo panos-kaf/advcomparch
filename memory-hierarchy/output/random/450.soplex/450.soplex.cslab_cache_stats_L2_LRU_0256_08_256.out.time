@@ -1,5 +1,0 @@
-/bin/bash: line 1: 1313559 Segmentation fault      (core dumped) /home/panos/tools/pin/pin -t /home/panos/dev/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so -o /home/panos/dev/advcomparch/memory-hierarchy/output/random/450.soplex/450.soplex.cslab_cache_stats_L2_LRU_0256_08_256.out -L1c 32 -L1a 4 -L1b 32 -L2c 256 -L2a 8 -L2b 256 -- ./soplex_base.gcc49-static -m1200 train.mps > train.out 2> train.stderr
-
-real	0m0.239s
-user	0m0.022s
-sys	0m0.060s
