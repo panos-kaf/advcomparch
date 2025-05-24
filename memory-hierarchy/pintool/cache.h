@@ -133,7 +133,8 @@ class LRU : public POLICY
     
 };
 
-/*class RANDOM: public POLICY
+
+class RANDOM: public POLICY
 {
     public:
         RANDOM(UINT32 associativity = 8) : POLICY(associativity) { srand(18939); }
@@ -150,69 +151,20 @@ class LRU : public POLICY
         }
 
         virtual CACHE_TAG Replace(CACHE_TAG tag) override{
-            CACHE_TAG ret;
-            int replacement_index = rand() % _associativity;
-            ret = _tags[replacement_index];
-            _tags[replacement_index] = tag;
-            return ret; 
-        }
+            CACHE_TAG ret = INVALID_TAG;
 
-};*/
-class RANDOM
-{
-  protected:
-    std::vector<CACHE_TAG> _tags;
-    UINT32 _associativity;
-
- public:
-    RANDOM(UINT32 associativity = 8)
-    {
-        _associativity = associativity;
-        _tags.clear();
-		srandom(18939);
-    }
-
-    VOID SetAssociativity(UINT32 associativity)
-    {
-        _associativity = associativity;
-        _tags.clear();
-    }
-    UINT32 GetAssociativity() { return _associativity; }
-
-    string Name() { return "RANDOM"; }
-    
-    UINT32 Find(CACHE_TAG tag)
-    {
-        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
-             it != _tags.end(); ++it)
-        {
-            if (*it == tag) { // Tag found, lets make it MRU
-                return true;
+            if (_tags.size() < _associativity) {
+                _tags.push_back(tag);
             }
-        }
-        return false;
-    }
-
-    CACHE_TAG Replace(CACHE_TAG tag)
-    {
-		CACHE_TAG ret;
-		int replacement_index = rand() % _tags.size();
-		ret = _tags[replacement_index];
-		_tags[replacement_index] = tag;
-		return ret; 
-    }
-    
-    VOID DeleteIfPresent(CACHE_TAG tag)
-    {
-        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
-             it != _tags.end(); ++it)
-        {
-            if (*it == tag) { // Tag found
-                _tags.erase(it);
-                break;
+            else {
+                int replacement_index = rand() % _tags.size();
+                ret = _tags[replacement_index];
+                _tags[replacement_index] = tag;
             }
+
+            return ret;
         }
-    }
+
 };
 
 class LFU: public POLICY
@@ -237,19 +189,29 @@ class LFU: public POLICY
 
         virtual CACHE_TAG Replace(CACHE_TAG tag)
         {
-            //CACHE_TAG ret = INVALID_TAG;
-            int lfu = _tags[0].get_freq();
-
+            CACHE_TAG ret = INVALID_TAG;
+            
+            if (_tags.size() < _associativity){
+                _tags.push_back(tag);
+                return ret;
+            }
+            
+            int i = 0, lfu_index = 0;
+            int lfu = _tags[lfu_index].get_freq();
+            
             for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
                 it != _tags.end(); ++it)
             {
                 if (it->get_freq() < lfu) {
                     lfu = it->get_freq();
-                    //ret = it;
+                    lfu_index = i;
                 }
+                i++;
             }
             
-					return 0;
+            ret = _tags[lfu_index];
+            _tags[lfu_index] = tag;
+			return ret;
         }
 
 };
