@@ -180,7 +180,7 @@ class LFU: public POLICY
                 it != _tags.end(); ++it)
                 {
                     if (*it == tag){
-                        tag.incr_freq();
+                        it->incr_freq();
                         return true;
                     }
                 }
@@ -195,7 +195,7 @@ class LFU: public POLICY
                 _tags.push_back(tag);
                 return ret;
             }
-            
+
             int i = 0, lfu_index = 0;
             int lfu = _tags[lfu_index].get_freq();
             
@@ -216,6 +216,43 @@ class LFU: public POLICY
 
 };
 
+class LIP: public POLICY
+{
+    public:
+    LIP(UINT32 associativity = 8) : POLICY(associativity) {}
+
+    virtual string Name() { return "LIP"; }
+    
+    virtual UINT32 Find(CACHE_TAG tag)
+    {
+        for (std::vector<CACHE_TAG>::iterator it = _tags.begin();
+             it != _tags.end(); ++it)
+        {
+            if (*it == tag) { // Tag found, lets make it MRU
+                _tags.erase(it);
+                _tags.push_back(tag);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    virtual CACHE_TAG Replace(CACHE_TAG tag)
+    {
+        CACHE_TAG ret = INVALID_TAG;
+        // if (_tags.size() == _associativity) {
+        //     ret = *_tags.begin();
+        //     _tags.erase(_tags.begin());
+        // }
+        _tags.insert( _tags.front(), tag);
+        // if (_tags.size() > _associativity) {
+
+        //     _tags.erase(_tags.begin()+1);
+        // }
+        return ret;
+    }
+};
 
 } // namespace CACHE_SET
 
