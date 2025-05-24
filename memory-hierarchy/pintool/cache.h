@@ -241,15 +241,12 @@ class LIP: public POLICY
     virtual CACHE_TAG Replace(CACHE_TAG tag)
     {
         CACHE_TAG ret = INVALID_TAG;
-        // if (_tags.size() == _associativity) {
-        //     ret = *_tags.begin();
-        //     _tags.erase(_tags.begin());
-        // }
-        _tags.insert( _tags.front(), tag);
-        // if (_tags.size() > _associativity) {
+         if (_tags.size() == _associativity) {
+             ret = *_tags.begin();
+             _tags.erase(_tags.begin());
+         }
 
-        //     _tags.erase(_tags.begin()+1);
-        // }
+        _tags.insert( _tags.begin(), tag);
         return ret;
     }
 };
