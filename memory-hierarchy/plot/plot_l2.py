@@ -69,6 +69,8 @@ labels, summary_mpki, summary_ipc = zip(*combined)
 
 x = np.arange(len(labels))
 
+filename = os.path.splitext(input('Enter file name (e.g. 4_2): ').lstrip('.'))[0]
+
 # Plot summary MPKI
 plt.figure(figsize=(14, 7))
 plt.plot(x, summary_mpki, marker='x', linestyle='-', color='orange', markeredgecolor='black')
@@ -79,8 +81,7 @@ for i, v in enumerate(summary_mpki):
     plt.text(x[i] + 0.4, v, f"{v:.2f}", ha='center', va='bottom', fontsize=9)
 plt.grid(True)
 plt.tight_layout()
-mpki_filename = input("Filename for MPKI chart: ")
-plt.savefig(mpki_filename, bbox_inches='tight')
+plt.savefig(filename+'_mpki.png', bbox_inches='tight')
 
 # Plot summary IPC
 plt.figure(figsize=(14, 7))
@@ -92,6 +93,5 @@ for i, v in enumerate(summary_ipc):
     plt.text(x[i] + 0.4, v, f"{v:.2f}", ha='center', va='bottom', fontsize=9)
 plt.grid(True)
 plt.tight_layout()
-ipc_filename = input("Filename for IPC chart: ")
-plt.savefig(ipc_filename, bbox_inches='tight')
+plt.savefig(filename+'_ipc.png', bbox_inches='tight')
 
