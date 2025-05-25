@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ## Modify the following paths appropriately
-#BASE_DIR="/home/panos/dev/advcomparch/memory-hierarchy"
-BASE_DIR="/mnt/c/NTUA/advcomparch/memory-hierarchy" # windows
+BASE_DIR="/home/panos/dev/advcomparch/memory-hierarchy"
+#BASE_DIR="/mnt/c/NTUA/advcomparch/memory-hierarchy" # windows
 
 PIN_EXE="/home/panos/tools/pin/pin"
 #PIN_EXE="/mnt/c/NTUA/tools/pin/pin" # windows
