@@ -101,7 +101,7 @@ for i, cache in enumerate(caches):
             plt.text(bar.get_x() + bar.get_width() / 2, height / 2,
                      f"{height:.2f}", ha='center', va='center', fontsize=9)
 
-plt.xticks(x, sorted_configs, ha='right')
+plt.xticks(x, sorted_configs, ha='center')
 plt.ylabel("L2 MPKI (Geometric Mean)")
 plt.title("L2 MPKI Comparison by Cache Organization and Replacement Policy ")
 plt.legend()
@@ -118,7 +118,7 @@ for i, cache in enumerate(caches):
             plt.text(bar.get_x() + bar.get_width() / 2, height / 2,
                      f"{height:.2f}", ha='center', va='center', fontsize=9)
 
-plt.xticks(x, sorted_configs, ha='right')
+plt.xticks(x, sorted_configs, ha='center')
 plt.ylabel("IPC (Geometric Mean)")
 plt.title("IPC Comparison by Cache Organization and Replacement Policy")
 plt.legend()
