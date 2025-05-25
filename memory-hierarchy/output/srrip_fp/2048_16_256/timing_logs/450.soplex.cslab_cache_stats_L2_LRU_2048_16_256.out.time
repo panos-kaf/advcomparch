@@ -1,5 +1,5 @@
-/bin/bash: line 1: 126430 Segmentation fault      (core dumped) /home/panos/tools/pin/pin -t /home/panos/dev/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so -o /home/panos/dev/advcomparch/memory-hierarchy/output/srrip_fp/2048_16_256/450.soplex.cslab_cache_stats_L2_LRU_2048_16_256.out -L1c 32 -L1a 4 -L1b 32 -L2c 2048 -L2a 16 -L2b 256 -- ./soplex_base.gcc49-static -m1200 train.mps > train.out 2> train.stderr
+/bin/bash: line 1: 81431 Segmentation fault      (core dumped) /mnt/c/NTUA/tools/pin/pin -t /mnt/c/NTUA/advcomparch/memory-hierarchy/pintool/obj-intel64/simulator.so -o /mnt/c/NTUA/advcomparch/memory-hierarchy/output/srrip_fp_test/2048_16_256/450.soplex.cslab_cache_stats_L2_LRU_2048_16_256.out -L1c 32 -L1a 4 -L1b 32 -L2c 2048 -L2a 16 -L2b 256 -- ./soplex_base.gcc49-static -m1200 train.mps > train.out 2> train.stderr
 
-real	0m2.011s
-user	0m1.250s
-sys	0m0.265s
+real	0m4.234s
+user	0m1.275s
+sys	0m0.250s

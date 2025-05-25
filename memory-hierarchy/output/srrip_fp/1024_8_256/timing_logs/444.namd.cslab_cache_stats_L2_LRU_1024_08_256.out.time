@@ -9,6 +9,6 @@ iteration 0: 0 1 1
 *** TEST RUN - 1 ITERATIONS ***
 SUCCESSFUL COMPLETION
 
-real	13m16.345s
-user	11m27.222s
-sys	0m0.989s
+real	3m59.971s
+user	3m58.703s
+sys	0m0.388s
