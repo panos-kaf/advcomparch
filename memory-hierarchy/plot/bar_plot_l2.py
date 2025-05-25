@@ -84,8 +84,9 @@ for cache in caches:
     mpki_matrix.append(mpki_row)
     ipc_matrix.append(ipc_row)
 
-x = np.arange(num_configs)
 bar_width = 0.15
+group_spacing = bar_width * (num_caches + 1)
+x = np.arange(num_configs) * group_spacing
 offsets = np.linspace(-bar_width*num_caches/2, bar_width*num_caches/2, num_caches)
 
 filename = os.path.splitext(input('Enter file name (e.g. 4_3): ').lstrip('.'))[0]
