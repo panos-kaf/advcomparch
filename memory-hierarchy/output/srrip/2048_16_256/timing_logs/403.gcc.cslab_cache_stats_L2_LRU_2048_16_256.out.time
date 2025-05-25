@@ -1,0 +1,6 @@
+C: [tid:50010] Tool (or Pin) caused signal 11 at PC 0x760d71b7a03c
+./run_benchmarks_4_3.sh: line 40: 50010 Segmentation fault      (core dumped) /bin/bash -c "$pin_cmd"
+
+real	0m5.236s
+user	0m1.731s
+sys	0m0.501s
