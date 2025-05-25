@@ -85,7 +85,7 @@ for cache in caches:
     ipc_matrix.append(ipc_row)
 
 bar_width = 0.15
-group_spacing = bar_width * (num_caches + 1)
+group_spacing = bar_width * (num_caches + 3)
 x = np.arange(num_configs) * group_spacing
 offsets = np.linspace(-bar_width*num_caches/2, bar_width*num_caches/2, num_caches)
 
@@ -101,9 +101,9 @@ for i, cache in enumerate(caches):
             plt.text(bar.get_x() + bar.get_width() / 2, height / 2,
                      f"{height:.2f}", ha='center', va='center', fontsize=9)
 
-plt.xticks(x, sorted_configs, rotation=60, ha='right')
+plt.xticks(x, sorted_configs, ha='right')
 plt.ylabel("L2 MPKI (Geometric Mean)")
-plt.title("L2 MPKI Comparison by Cache Organization and Replacement Strategy ")
+plt.title("L2 MPKI Comparison by Cache Organization and Replacement Policy ")
 plt.legend()
 plt.tight_layout()
 plt.savefig(filename+'_mpki.png', bbox_inches='tight')
@@ -118,9 +118,9 @@ for i, cache in enumerate(caches):
             plt.text(bar.get_x() + bar.get_width() / 2, height / 2,
                      f"{height:.2f}", ha='center', va='center', fontsize=9)
 
-plt.xticks(x, sorted_configs, rotation=60, ha='right')
+plt.xticks(x, sorted_configs, ha='right')
 plt.ylabel("IPC (Geometric Mean)")
-plt.title("IPC Comparison by Cache Organization and Replacement Strategy")
+plt.title("IPC Comparison by Cache Organization and Replacement Policy")
 plt.legend()
 plt.tight_layout()
 plt.savefig(filename+'_ipc.png', bbox_inches='tight')
