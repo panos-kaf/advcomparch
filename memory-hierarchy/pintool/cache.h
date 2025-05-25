@@ -256,6 +256,9 @@ class SRRIP_HP: public POLICY
         SRRIP_HP(UINT32 associativity = 8) : POLICY(associativity) {
             rrpv = new int[_associativity];
             max_rrpv = (1 << _associativity) - 1;
+
+            for (UINT32 i = 0; i < _associativity; i++)
+                rrpv[i] = max_rrpv;
         }
 
         ~SRRIP_HP() { delete[] rrpv; }
@@ -282,19 +285,31 @@ class SRRIP_HP: public POLICY
                 rrpv[_tags.size() - 1] = max_rrpv - 1;  // long re-reference
                 return ret;
             }
-            for (int i = 0; i < max_rrpv; i++){
-                for (long unsigned j = 0; j < _tags.size(); j++){
-                    if (rrpv[j] == max_rrpv){
-                        ret = _tags[j];
-                        _tags[j] = tag;
-                        rrpv[j] = max_rrpv - 1;  // long re-reference
-                        return ret;
-                    }
+
+            int victim_index = 0;
+            int victim_rrpv = rrpv[victim_index];
+
+            for (long unsigned i = 0; i < _tags.size(); i++){
+                if (rrpv[i] == max_rrpv){           // if max_rrpv replace
+                    ret = _tags[i];
+                    _tags[i] = tag;
+                    rrpv[i]--;
+                    return ret;
                 }
-                increment_rrpv();   // no distance re-reference found
+                if (rrpv[i] > victim_rrpv){         // find biggest rrpv
+                    victim_rrpv = rrpv[i];
+                    victim_index = i;
+                }
             }
-            return ret; // shouldnt reach this
+
+            increase_rrpv(max_rrpv - victim_rrpv);  // increase all rrpvs so that victim has max_rrpv
+            ret = _tags[victim_index];
+            _tags[victim_index] = tag;
+            rrpv[victim_index]--;                   // max_rrpv - 1
+
+            return ret;
         }
+
     
     protected:
         int* rrpv;
@@ -302,11 +317,12 @@ class SRRIP_HP: public POLICY
     private:
         int max_rrpv;
 
-        void increment_rrpv()
+        void increase_rrpv(int val)
         {
             for (UINT32 i = 0; i < _associativity; i++){
-                if (rrpv[i] < max_rrpv)
-                    rrpv[i]++;
+                if (rrpv[i] + val < max_rrpv)
+                    rrpv[i] += val;
+                else rrpv[i] = max_rrpv;
             }
         }
 };
