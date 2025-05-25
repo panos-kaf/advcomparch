@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-caches = ['random', 'lfu', 'lip', 'srrip']
+caches = ['lru', 'random', 'lfu', 'lip', 'srrip_hp', 'srrip_fp']
 
 def geomean(values):
     logs = [math.log(v) for v in values if v > 0]
