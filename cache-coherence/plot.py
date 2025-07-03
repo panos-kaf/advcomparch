@@ -66,9 +66,10 @@ for grain_dir in os.listdir(root_dir):
 
 
     # Save as PNG
-    output_file = f"plot-{grain_dir}.png"
-    plt.savefig(output_file)
+    output_dir = "graphs"
+    output_file = f"{grain_dir}-plot.png"
+    plt.savefig(f"{output_dir}/{output_file}")
     plt.close()
 
-    print(f"Saved plot: {output_file}")
+    print(f"Saved plot: {output_file} in ./{output_dir}")
 
