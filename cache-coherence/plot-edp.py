@@ -7,7 +7,6 @@ def extract_time_ns(sim_path):
         for line in f:
             if line.strip().startswith("Time (ns)"):
                 values = list(map(int, re.findall(r"\d+", line)))
-                print(sim_path, ':', values[0])
                 return values[0] if values else None
     return None
 
