@@ -47,29 +47,33 @@ for grain_dir in os.listdir(root_dir):
         continue
 
     #print(grain_data)
-    markers = ['<', '>', 'P', '*', 'x']
     
-    plt.figure(figsize=(10, 6))
-    for lock_type, values in grain_data.items():
-        sorted_data = sorted(zip(values["cores"], values["total_cycles"]))
-        cores, total_cycles = zip(*sorted_data)
-        plt.plot(cores, total_cycles, marker=markers.pop(0), label=lock_type)
+    scales = ['linear', 'log']
 
-    plt.xscale('log',base=2)
-    plt.xlabel("Number of Cores")
-    plt.ylabel("Total Cycles")
-    plt.title(f"Total Cycles vs Cores — {grain_dir}")
-    plt.xticks([1, 2, 4, 8, 16], labels=[str(x) for x in [1, 2, 4, 8, 16]])
-    plt.legend()
-    plt.grid(True, which="both", linestyle='-', linewidth=0.5)
-    plt.tight_layout()
-
-
-    # Save as PNG
-    output_dir = "graphs"
-    output_file = f"{grain_dir}-plot.png"
-    plt.savefig(f"{output_dir}/{output_file}")
-    plt.close()
-
-    print(f"Saved plot: {output_file} in ./{output_dir}")
+    for yscale in scales:
+        markers = ['<', '>', 'P', '*', 'x']
+        plt.figure(figsize=(10, 6))
+        for lock_type, values in grain_data.items():
+            sorted_data = sorted(zip(values["cores"], values["total_cycles"]))
+            cores, total_cycles = zip(*sorted_data)
+            plt.plot(cores, total_cycles, marker=markers.pop(0), label=lock_type)
+    
+        plt.yscale(yscale)
+        plt.xscale('log',base=2)
+        plt.xlabel("Number of Cores")
+        plt.ylabel("Total Cycles")
+        plt.title(f"Total Cycles vs Cores — {grain_dir}")
+        plt.xticks([1, 2, 4, 8, 16], labels=[str(x) for x in [1, 2, 4, 8, 16]])
+        plt.legend()
+        plt.grid(True, which="both", linestyle='-', linewidth=0.5)
+        plt.tight_layout()
+    
+    
+        # Save as PNG
+        output_dir = "graphs"
+        output_file = f"{grain_dir}-{yscale}-plot.png"
+        plt.savefig(f"{output_dir}/{output_file}")
+        plt.close()
+    
+        print(f"Saved plot: {output_file} in ./{output_dir}")
 
