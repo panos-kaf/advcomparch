@@ -28,6 +28,7 @@ def extract_energy(power_path):
     return None
 
 root_dir = input('Enter benchmark directory: ')
+output_dir = input('Enter output directory: ')
 
 for grain_dir in os.listdir(root_dir):
     if not grain_dir.startswith("grain-"):
@@ -111,8 +112,8 @@ for grain_dir in os.listdir(root_dir):
             plt.grid(True, which="both", linestyle='-', linewidth=0.5)
             plt.tight_layout()
     
-            output_dir = "graphs"
             output_file = f"{metric_key}-{grain_dir}-{yscale}-plot.png"
+            os.makedirs(output_dir, exist_ok=True)
             plt.savefig(f"{output_dir}/{output_file}")
             plt.close()
             print(f"Saved plot: {output_file} in ./{output_dir}")

@@ -1,4 +1,5 @@
 import re
+import os
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
@@ -52,7 +53,8 @@ def plot_data(data):
             plt.legend()
             plt.grid(True)
             plt.tight_layout()
-            output_dir = "graphs"
+            output_dir = "graphs/real"
+            os.makedirs(output_dir, exist_ok=True)
             plot_name = f"grain-{grain}-{yscale}-real-plot.png"
             plt.savefig(f"{output_dir}/{plot_name}")
             print(f'Saved plot: {plot_name} in ./{output_dir}')
@@ -60,7 +62,7 @@ def plot_data(data):
 
 
 if __name__ == "__main__":
-    filename = "4.1.4.out"  
+    filename = "output/4.1.4.out"  
     result = parse_file(filename)
     plot_data(result)
 
