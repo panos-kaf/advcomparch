@@ -55,8 +55,9 @@ def plot_data(data):
             plt.tight_layout()
             output_dir = "graphs/real"
             os.makedirs(output_dir, exist_ok=True)
-            plot_name = f"grain-{grain}-{yscale}-real-plot.png"
-            plt.savefig(f"{output_dir}/{plot_name}")
+            plot_name = f"grain-{grain}-{yscale}-real-plot"
+            plt.savefig(f"{output_dir}/{plot_name}.svg", format='svg')
+            plt.savefig(f"{output_dir}/{plot_name}.png", format='png')
             print(f'Saved plot: {plot_name} in ./{output_dir}')
             plt.close() 
 

@@ -152,9 +152,10 @@ for metric_key, ylabel in metrics:
     plt.tight_layout()
     
     # Save plot
-    output_file = f"{metric_key}-cache-arch-plot.png"
+    output_file = f"{metric_key}-cache-arch-plot"
     os.makedirs(output_dir, exist_ok=True)
-    plt.savefig(f"{output_dir}/{output_file}", dpi=300, bbox_inches='tight')
+    plt.savefig(f"{output_dir}/{output_file}.png", format='png', dpi=300, bbox_inches='tight')
+    plt.savefig(f"{output_dir}/{output_file}.svg", format='svg', dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved plot: {output_file} in ./{output_dir}")
 
