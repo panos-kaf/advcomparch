@@ -34,7 +34,7 @@ def plot_data(data):
             plt.yscale(yscale)
             plt.xscale('log', base=2)
 
-            plt.title(f"Execution Time vs Threads (Grain = {grain}, yscale={yscale})")
+            plt.title(f"Execution Time vs Threads - Grain = {grain}")
             plt.xlabel("Threads")
             plt.ylabel("Execution Time (s)")
 
@@ -43,12 +43,11 @@ def plot_data(data):
                 entries_sorted = sorted(entries, key=lambda x: x['threads'])
                 threads = [e['threads'] for e in entries_sorted]
                 times = [e['execution_time'] for e in entries_sorted]
-
                 plt.plot(threads, times, marker='o', label=lock_type)
+                plt.xticks(threads, labels=[str(x) for x in threads])
 
 #plt.xticks([1, 2, 4, 8, 14], labels=[str(x) for x in [1, 2, 4, 8, 14]])
-            threads = [e['threads'] for e in entries_sorted]
-            plt.xticks(threads)
+#      threads = [e['threads'] for e in entries_sorted]
 
             plt.legend()
             plt.grid(True)
